@@ -1,13 +1,13 @@
-﻿using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
+namespace EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity
 {
     public class UserRole
     {
         [Key]
-        public Guid Id =Guid.NewGuid();
+        public Guid Id = Guid.NewGuid();
         public User User { get; set; }
 
         public int RoleId { get; set; }
