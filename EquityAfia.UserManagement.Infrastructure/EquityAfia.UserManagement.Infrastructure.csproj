@@ -27,7 +27,6 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Configurations\EntityConfigurations\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

@@ -16,7 +16,6 @@
     <Folder Include="Authentication\Commands\ResetPassword\" />
     <Folder Include="Authentication\Commands\Register\" />
     <Folder Include="Authentication\Queries\LogIn\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>
