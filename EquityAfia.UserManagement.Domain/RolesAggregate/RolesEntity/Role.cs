@@ -6,7 +6,7 @@ namespace EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity
 {
     public class Role
     {
-        [Key]
+      //  [Key]
         public int RoleId { get; set; }
 
         [Required]
