@@ -15,7 +15,7 @@ namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
         public string PhoneNumber { get; set; }
         public string IdNumber { get; set; }
         public string Location { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public string Password { get; set; }
         public bool IsEmailConfirmed { get; set; } = false;
         public bool Is2FAEnabled { get; set; } = false;

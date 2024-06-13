@@ -1,17 +1,23 @@
 ﻿
-using MediatR;
-using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
+using Microsoft.Extensions.Logging;
+using EquityAfia.UserManagement.Application.Authentication.Common;
 using EquityAfia.UserManagement.Application.Interfaces;
+using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
+using MediatR;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner
 {
     public class RegisterPractitionerCommandHandler : IRequestHandler<RegisterPractitionerCommand, Guid>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly ILogger<RegisterPractitionerCommandHandler> _logger;
 
-        public RegisterPractitionerCommandHandler(IUserRepository userRepository)
+        public RegisterPractitionerCommandHandler(IUserRepository userRepository, IRoleRepository roleRepository, ILogger<RegisterPractitionerCommandHandler> logger)
         {
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
+            _logger = logger;
         }
 
         public async Task<Guid> Handle(RegisterPractitionerCommand request, CancellationToken cancellationToken)
@@ -34,7 +40,16 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 UpdatedDate = DateTime.UtcNow
             };
 
-            await _userRepository.AddUserAsync(practitioner);
+            try
+            {
+                await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, practitioner, practitionerDto.UserRoles);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while registering practitioner.");
+                throw; // Propagate the exception to the controller
+            }
+
             return practitioner.Id;
         }
     }

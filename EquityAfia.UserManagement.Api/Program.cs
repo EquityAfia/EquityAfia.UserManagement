@@ -1,4 +1,3 @@
-
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
 using EquityAfia.UserManagement.Application.Interfaces;
@@ -10,10 +9,11 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add logging configuration
+ConfigureLogging(builder);
 
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,14 +24,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 builder.Services.AddTransient<IRequestHandler<RegisterPractitionerCommand, Guid>, RegisterPractitionerCommandHandler>();
-
 builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, Guid>, RegisterUserCommandHandler>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-
-
 
 var app = builder.Build();
 
@@ -43,9 +39,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
+
+// Configure logging
+void ConfigureLogging(WebApplicationBuilder builder)
+{
+    builder.Services.AddLogging(loggingBuilder =>
+    {
+        loggingBuilder.ClearProviders(); // Clear the default logging providers
+        loggingBuilder.AddConsole(); 
+
+    });
+}
