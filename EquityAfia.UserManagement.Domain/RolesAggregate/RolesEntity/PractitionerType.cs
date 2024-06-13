@@ -1,13 +1,12 @@
 ﻿
 
-namespace EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity
+namespace EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+
+public enum PractitionerType
 {
-    public enum PractitionerType
-    {
-        Doctor,
-        Nurse,
-        Pharmacist,
-        LabTechnician,
-        CHP
-    }
+    Doctor,
+    Nurse,
+    Pharmacist,
+    LabTechnician,
+    CHP
 }

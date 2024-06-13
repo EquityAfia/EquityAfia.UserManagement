@@ -11,6 +11,5 @@ namespace EquityAfia.UserManagement.Application.Interfaces
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(Guid userId);
-        Task AssignRoleToUserAsync(string email, string roleName);
     }
 }

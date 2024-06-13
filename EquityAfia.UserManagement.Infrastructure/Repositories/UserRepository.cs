@@ -1,4 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces;
+using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -52,30 +53,6 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
         }
 
-        public async Task AssignRoleToUserAsync(string email, string roleName)
-        {
-            var user = await _context.Users.FindAsync(email);
-            if (user == null)
-            {
-                throw new ApplicationException("User not found.");
-            }
-
-            var role = await _context.Roles.FindAsync(roleName);
-            if (role == null)
-            {
-                throw new ApplicationException("Role not found.");
-            }
-
-            var userRole = new UserRole
-            {
-                User = user,
-                RoleId = role.RoleId,
-                Role = role,
-            };
-
-            _context.UserRoles.Add(userRole);
-            await _context.SaveChangesAsync();
-        }
 
     }
 }

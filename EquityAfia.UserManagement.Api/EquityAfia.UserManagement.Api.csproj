@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,10 +23,6 @@
     <ProjectReference Include="..\EquityAfia.UserManagement.Application\EquityAfia.UserManagement.Application.csproj" />
     <ProjectReference Include="..\EquityAfia.UserManagement.Contracts\EquityAfia.UserManagement.Contracts.csproj" />
     <ProjectReference Include="..\EquityAfia.UserManagement.Infrastructure\EquityAfia.UserManagement.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
