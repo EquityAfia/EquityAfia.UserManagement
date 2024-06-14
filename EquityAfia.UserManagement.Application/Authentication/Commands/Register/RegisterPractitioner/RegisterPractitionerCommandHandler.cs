@@ -4,25 +4,30 @@ using EquityAfia.UserManagement.Application.Authentication.Common;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using MediatR;
+using EquityAfia.UserManagement.Contracts.Authentication;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner
 {
-    public class RegisterPractitionerCommandHandler : IRequestHandler<RegisterPractitionerCommand, Guid>
+    public class RegisterPractitionerCommandHandler : IRequestHandler<RegisterPractitionerCommand, RegisterResponse>
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly ILogger<RegisterPractitionerCommandHandler> _logger;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public RegisterPractitionerCommandHandler(IUserRepository userRepository, IRoleRepository roleRepository, ILogger<RegisterPractitionerCommandHandler> logger)
+        public RegisterPractitionerCommandHandler(IUserRepository userRepository, IRoleRepository roleRepository, ILogger<RegisterPractitionerCommandHandler> logger, IJwtTokenGenerator jwtTokenGenerator)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _logger = logger;
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<Guid> Handle(RegisterPractitionerCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterResponse> Handle(RegisterPractitionerCommand request, CancellationToken cancellationToken)
         {
             var practitionerDto = request.Practitioner;
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(practitionerDto.Password);
 
             var practitioner = new Practitioner
             {
@@ -31,11 +36,12 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 LastName = practitionerDto.LastName,
                 Email = practitionerDto.Email,
                 PhoneNumber = practitionerDto.PhoneNumber,
+                IdNumber = practitionerDto.IdNumber,
                 Location = practitionerDto.Location,
                 DateOfBirth = practitionerDto.DateOfBirth,
-                Password = practitionerDto.Password,
+                Password = hashedPassword,
                 LicenseNumber = practitionerDto.LicenseNumber,
-                PractitionerType = practitionerDto.PractitionerType,
+               // UserRoles = practitionerDto.UserRoles,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow
             };
@@ -50,7 +56,22 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 throw; // Propagate the exception to the controller
             }
 
-            return practitioner.Id;
+            var token = _jwtTokenGenerator.GenerateToken(practitioner);
+
+
+            var response = new RegisterResponse
+            {
+                FirstName = practitioner.FirstName,
+                LastName = practitioner.LastName,
+                Email = practitioner.Email,
+                PhoneNumber = practitioner.PhoneNumber,
+                IdNumber = practitioner.IdNumber,
+                Location = practitioner.Location,
+              //  UserRoles = practitioner.UserRoles,
+                Token = token
+            };
+
+            return response;
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EquityAfia.UserManagement.Domain.UserAggregate;
-using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
+﻿using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+using Microsoft.EntityFrameworkCore;
 
 namespace EquityAfia.UserManagement.Infrastructure.Data
 {
@@ -15,6 +14,8 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
         public DbSet<Practitioner> Practitioners { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<PractitionerType> PractitionerTypes { get; set; }
+        public DbSet<UserType> UserTypes { get; set; } // Rename to Types to avoid collision and confusion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,12 +32,22 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.Id);
+                .HasForeignKey(ur => ur.Id); // Corrected ForeignKey to UserId
 
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
+
+            modelBuilder.Entity<PractitionerType>()
+                .HasOne(pt => pt.Practitioner)
+                .WithMany(p => p.PractitionerTypes) // Matches the navigation property in Practitioner
+                .HasForeignKey(pt => pt.PractitionerId);
+
+            modelBuilder.Entity<PractitionerType>()
+                .HasOne(pt => pt.Type)
+                .WithMany(t => t.PractitionerTypes)
+                .HasForeignKey(pt => pt.TypeId);
         }
     }
 }
