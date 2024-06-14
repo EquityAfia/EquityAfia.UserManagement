@@ -21,9 +21,9 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserByEmail([FromQuery] string email = null, [FromQuery] string idNumber = null)
+        public async Task<IActionResult> GetUserByEmail([FromQuery] GetUserRequest getUserRequest = null)
         {
-            var command = new GetUserCommand(email, idNumber);
+            var command = new GetUserCommand(getUserRequest);
 
             var response = await _mediator.Send(command);
 
