@@ -20,31 +20,20 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             _mapper = mapper;
         }
 
-        [HttpGet("{email}")]
-        public async Task<IActionResult> GetUserByEmail(string email)
+        [HttpGet]
+        public async Task<IActionResult> GetUserByEmail([FromQuery] string email = null, [FromQuery] string idNumber = null)
         {
-            // Validate the email parameter
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                return BadRequest("Email cannot be empty");
-            }
+            var command = new GetUserCommand(email, idNumber);
 
-            // Create the command with the email
-            var command = new GetUserCommand( email );
-
-            // Send the command to the mediator and await the response
             var response = await _mediator.Send(command);
 
-            // Check if the response is null (user not found)
             if (response == null)
             {
                 return NotFound("User not found");
             }
 
-            // Use AutoMapper to map the response to GetUserResponse
             var mappedResponse = _mapper.Map<GetUserResponse>(response);
 
-            // Return the mapped response
             return Ok(mappedResponse);
         }
     }

@@ -9,6 +9,7 @@
         public string IdNumber { get; set; }
         public string Location { get; set; }
         public string DateOfBirth { get; set; }
+        public string UserType { get; set; }
         public string? LicenseNumber { get; set; }
     }
 }

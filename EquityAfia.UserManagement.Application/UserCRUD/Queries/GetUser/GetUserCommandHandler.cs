@@ -19,8 +19,8 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
 
         public async Task<GetUserResponse> Handle(GetUserCommand request, CancellationToken cancellationToken)
         {
-            // Retrieve user by email asynchronously
-            var user = await _userRepository.GetUserByEmailAsync(request.Email);
+            // Retrieve user by email or ID number asynchronously
+            var user = await _userRepository.GetUserByEmailOrIdNumberAsync(request.Email, request.IdNumber); 
             if (user == null)
             {
                 throw new ApplicationException("User not found");
@@ -36,7 +36,7 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
                 IdNumber = user.IdNumber,
                 Location = user.Location,
                 DateOfBirth = user.DateOfBirth,
-               // LicenseNumber = user.LicenseNumber // Assuming this field exists
+                UserType = user.UserType
             };
 
             return response;
