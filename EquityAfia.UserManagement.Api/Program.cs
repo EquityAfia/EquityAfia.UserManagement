@@ -1,11 +1,16 @@
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
 using EquityAfia.UserManagement.Application.Interfaces;
+using EquityAfia.UserManagement.Contracts.Authentication;
+using EquityAfia.UserManagement.Infrastructure.Authentication;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using EquityAfia.UserManagement.Infrastructure.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,11 +28,40 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-builder.Services.AddTransient<IRequestHandler<RegisterPractitionerCommand, Guid>, RegisterPractitionerCommandHandler>();
-builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, Guid>, RegisterUserCommandHandler>();
+// Register AutoMapper for services from the executing assembly
+builder.Services.AddAutoMapper(typeof(RegisterUserCommandHandler)); 
+
+
+builder.Services.AddTransient<IRequestHandler<RegisterPractitionerCommand, RegisterResponse>, RegisterPractitionerCommandHandler>();
+builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, RegisterResponse>, RegisterUserCommandHandler>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+
+
+// Register JwtSettings
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+// Register JwtTokenGenerator
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+// Configure JWT authentication
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidIssuer = jwtSettings.Issuer, // Set valid issuer
+            ValidateAudience = false,
+            ValidAudience = jwtSettings.Audience, // Set valid audience
+            ValidateIssuerSigningKey = false,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+            ValidateLifetime = false,
+            ClockSkew = TimeSpan.Zero // Adjust if necessary
+        };
+    });
 
 var app = builder.Build();
 

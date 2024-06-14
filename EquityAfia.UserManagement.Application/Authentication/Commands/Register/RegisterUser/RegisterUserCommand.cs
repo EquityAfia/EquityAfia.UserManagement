@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using EquityAfia.UserManagement.Application.Dtos;
+using EquityAfia.UserManagement.Contracts.Authentication;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser
 {
-    public class RegisterUserCommand : IRequest<Guid>
+    public class RegisterUserCommand : IRequest<RegisterResponse>
     {
         public UserRegistrationDto User { get; set; }
 

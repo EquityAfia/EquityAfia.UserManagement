@@ -3,11 +3,11 @@ using EquityAfia.UserManagement.Contracts.Authentication;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner
 {
-    public class RegisterPractitionerCommand : IRequest<Guid>
+    public class RegisterPractitionerCommand : IRequest<RegisterResponse>
     {
-        public PractitionerRegistrationDto Practitioner { get; set; }
+        public PractitionerRegistrationRequest Practitioner { get; set; }
 
-        public RegisterPractitionerCommand(PractitionerRegistrationDto practitioner)
+        public RegisterPractitionerCommand(PractitionerRegistrationRequest practitioner)
         {
             Practitioner = practitioner;
         }

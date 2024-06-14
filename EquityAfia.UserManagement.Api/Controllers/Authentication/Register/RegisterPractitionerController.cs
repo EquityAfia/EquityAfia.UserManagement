@@ -1,11 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
-using EquityAfia.UserManagement.Application.Dtos;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 using EquityAfia.UserManagement.Contracts.Authentication;
+using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
+using AutoMapper;
 
 namespace EquityAfia.UserManagement.Api.Controllers
 {
@@ -15,28 +13,26 @@ namespace EquityAfia.UserManagement.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<RegisterPractitionerController> _logger;
+        private readonly IMapper _mapper;
 
-        public RegisterPractitionerController(IMediator mediator, ILogger<RegisterPractitionerController> logger)
+        public RegisterPractitionerController(IMediator mediator, ILogger<RegisterPractitionerController> logger, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterPractitioner([FromBody] PractitionerRegistrationDto practitionerDto)
+        public async Task<IActionResult> RegisterPractitioner([FromBody] PractitionerRegistrationRequest practitionerDto)
         {
-            try
-            {
-                var command = new RegisterPractitionerCommand(practitionerDto);
-                var practitionerId = await _mediator.Send(command);
+            
+            var command = new RegisterPractitionerCommand(practitionerDto);
+            var practitionerId = await _mediator.Send(command);
 
-                return Ok(new { PractitionerId = practitionerId });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while registering practitioner.");
-                return BadRequest(new { Error = ex.Message });
-            }
+            var mappedResponse = _mapper.Map<RegisterResponse>(practitionerId);
+
+            return Ok(mappedResponse);
+
         }
     }
 }

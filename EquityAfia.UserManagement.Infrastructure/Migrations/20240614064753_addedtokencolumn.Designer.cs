@@ -4,6 +4,7 @@ using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquityAfia.UserManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614064753_addedtokencolumn")]
+    partial class addedtokencolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.PractitionerType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PractitionerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PractitionerId");
-
-                    b.HasIndex("TypeId");
-
-                    b.ToTable("PractitionerTypes");
-                });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.Role", b =>
                 {
@@ -77,23 +55,6 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
-                });
-
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.UserType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserTypes");
                 });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User", b =>
@@ -186,26 +147,10 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PractitionerType")
+                        .HasColumnType("int");
+
                     b.HasDiscriminator().HasValue("Practitioner");
-                });
-
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.PractitionerType", b =>
-                {
-                    b.HasOne("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Practitioner", "Practitioner")
-                        .WithMany("PractitionerTypes")
-                        .HasForeignKey("PractitionerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.UserType", "Type")
-                        .WithMany("PractitionerTypes")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Practitioner");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.UserRole", b =>
@@ -232,19 +177,9 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.UserType", b =>
-                {
-                    b.Navigation("PractitionerTypes");
-                });
-
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Practitioner", b =>
-                {
-                    b.Navigation("PractitionerTypes");
                 });
 #pragma warning restore 612, 618
         }

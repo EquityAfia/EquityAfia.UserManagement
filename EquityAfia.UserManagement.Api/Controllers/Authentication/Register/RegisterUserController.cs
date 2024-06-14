@@ -1,6 +1,7 @@
 ﻿
+using AutoMapper;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
-using EquityAfia.UserManagement.Application.Dtos;
+using EquityAfia.UserManagement.Contracts.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace EquityAfia.UserManagement.Api.Controllers.Authentication.Register
     public class RegisterUserController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public RegisterUserController(IMediator mediator)
+        public RegisterUserController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         // POST api/user/register
@@ -34,7 +37,9 @@ namespace EquityAfia.UserManagement.Api.Controllers.Authentication.Register
 
                 var userId = await _mediator.Send(command);
 
-                return Ok(new { UserId = userId });
+                var mappedResponse = _mapper.Map<RegisterResponse>(userId);
+
+                return Ok(mappedResponse);
             }
             catch (Exception ex)
             {

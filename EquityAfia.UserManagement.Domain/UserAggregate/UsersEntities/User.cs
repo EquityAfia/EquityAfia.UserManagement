@@ -23,11 +23,11 @@ namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
         public bool IsInitialPasswordChanged { get; set; } = false;
         public bool IsPasswordExpired { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
+        public string? Token { get; set; }
         public string? ResetToken { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public string UserType { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-
-        // Navigation property for UserRoles
-        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }
