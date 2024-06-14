@@ -15,6 +15,13 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<User> GetUserByEmailOrIdNumberAsync(string email, string idNumber)
+        {
+            // Example method to get user by either email or ID number
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email || u.IdNumber == idNumber);
+        }
+
         public async Task<User> GetUserByIdAsync(string idNumber)
         {
             return await _context.Users
