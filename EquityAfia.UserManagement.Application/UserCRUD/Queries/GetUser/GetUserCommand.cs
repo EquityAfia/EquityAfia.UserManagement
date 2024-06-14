@@ -5,14 +5,12 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
 {
     public class GetUserCommand : IRequest<GetUserResponse>
     {
-        public string Email { get; set; }
-        public string IdNumber { get; set; }
+        public GetUserRequest GetUserRequest { get; set; }
 
         // Constructor to initialize the command with either email or ID number
-        public GetUserCommand(string email = null, string idNumber = null)
+        public GetUserCommand(GetUserRequest getUserRequest = null)
         {
-            Email = email;
-            IdNumber = idNumber;
+            GetUserRequest = getUserRequest;
         }
     }
 }
