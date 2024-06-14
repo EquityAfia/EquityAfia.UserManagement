@@ -1,5 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Contracts.Authentication;
+using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using MediatR;
 using System;
 using System.Threading;

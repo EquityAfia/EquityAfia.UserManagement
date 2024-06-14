@@ -53,6 +53,5 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
         }
 
-
     }
 }
