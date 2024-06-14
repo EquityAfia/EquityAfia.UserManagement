@@ -39,6 +39,8 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ResetPas
             var newPassword = Request.NewPassword;
             user.ChangePassword(newPassword);
 
+            user.ClerResetToken(user);
+
             await _userRepository.UpdateUserAsync(user);
 
             var response = new ResetPasswordResponse
