@@ -1,12 +1,7 @@
-﻿using EquityAfia.UserManagement.Application.Common;
+﻿
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.ResetPassword
 {
@@ -39,7 +34,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ResetPas
             var newPassword = Request.NewPassword;
             user.ChangePassword(newPassword);
 
-            user.ClerResetToken(user);
+            user.ClearResetToken(user);
 
             await _userRepository.UpdateUserAsync(user);
 
