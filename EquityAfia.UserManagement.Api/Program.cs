@@ -1,5 +1,6 @@
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
+using EquityAfia.UserManagement.Application.Authentication.Queries.LogIn;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Contracts.Authentication;
 using EquityAfia.UserManagement.Infrastructure.Authentication;
@@ -34,6 +35,9 @@ builder.Services.AddAutoMapper(typeof(RegisterUserCommandHandler));
 
 builder.Services.AddTransient<IRequestHandler<RegisterPractitionerCommand, RegisterResponse>, RegisterPractitionerCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, RegisterResponse>, RegisterUserCommandHandler>();
+
+builder.Services.AddTransient<IRequestHandler<LoginQuery, LoginResponse>, LoginQueryHandler>();
+
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
