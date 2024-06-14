@@ -1,6 +1,7 @@
-﻿using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
+using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 
-namespace EquityAfia.UserManagement.Contracts.Authentication
+namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterPractitioner
 {
     public class PractitionerRegistrationRequest : UserRegistrationDto
     {

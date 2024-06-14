@@ -1,4 +1,5 @@
-﻿using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿using BCrypt.Net;
+using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,5 +30,94 @@ namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
         public string UserType { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+
+
+        
+
+        // Update user information
+        public void UpdateUserInfo(string firstName, string lastName, string email, string phoneNumber, string location, string dateOfBirth)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            PhoneNumber = phoneNumber; 
+            Location = location; 
+            DateOfBirth = dateOfBirth; 
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        public void SetResetToken(string token)
+        {
+            ResetToken = BCrypt.Net.BCrypt.HashPassword(token);
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        public void ClerResetToken(User user)
+        {
+            user.ResetToken = null;
+        }
+
+        // Confirm email
+        public void ConfirmEmail()
+        {
+            IsEmailConfirmed = true;
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Enable or disable 2FA
+        public void SetTwoFactorAuthentication(bool isEnabled)
+        {
+            Is2FAEnabled = isEnabled;
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Verify account
+        public void VerifyAccount()
+        {
+            IsAccountVerified = true;
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Change password
+        public void ChangePassword(string newPassword)
+        {
+            Password = BCrypt.Net.BCrypt.HashPassword(newPassword) ;
+            IsInitialPasswordChanged = true;
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Set password expiration
+        public void ExpirePassword()
+        {
+            IsPasswordExpired = true;
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Mark as deleted
+        public void DeleteUser()
+        {
+            IsDeleted = true;
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Assign a role to the user
+        public void AssignRole(UserRole role)
+        {
+            if (role == null) throw new ArgumentNullException(nameof(role));
+            UserRoles.Add(role);
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+        // Remove a role from the user
+        public void RemoveRole(UserRole role)
+        {
+            if (role == null) throw new ArgumentNullException(nameof(role));
+            UserRoles.Remove(role);
+            UpdatedDate = DateTime.UtcNow;
+        }
+
+
     }
+
+
 }

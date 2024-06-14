@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
-using EquityAfia.UserManagement.Contracts.Authentication;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using AutoMapper;
+using EquityAfia.UserManagement.Contracts.Authentication.RegisterPractitioner;
+using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 
 namespace EquityAfia.UserManagement.Api.Controllers
 {

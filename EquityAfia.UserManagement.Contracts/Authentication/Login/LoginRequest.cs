@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EquityAfia.UserManagement.Contracts.Authentication
+namespace EquityAfia.UserManagement.Contracts.Authentication.Login
 {
     public class LoginRequest
     {
-        [Required(ErrorMessage ="Email is required")]
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]

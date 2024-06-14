@@ -1,7 +1,7 @@
 ﻿
 using AutoMapper;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
-using EquityAfia.UserManagement.Contracts.Authentication;
+using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

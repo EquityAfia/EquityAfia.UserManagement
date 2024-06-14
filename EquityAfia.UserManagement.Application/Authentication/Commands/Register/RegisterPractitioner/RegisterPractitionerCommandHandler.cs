@@ -4,7 +4,7 @@ using EquityAfia.UserManagement.Application.Authentication.Common;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using MediatR;
-using EquityAfia.UserManagement.Contracts.Authentication;
+using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner
 {

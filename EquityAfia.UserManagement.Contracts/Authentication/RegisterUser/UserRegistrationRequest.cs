@@ -1,9 +1,8 @@
 ﻿using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
-using System;
 
-namespace EquityAfia.UserManagement.Contracts.Authentication
+namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
 {
-    public class RegisterResponse
+    public class UserRegistrationDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -11,9 +10,9 @@ namespace EquityAfia.UserManagement.Contracts.Authentication
         public string PhoneNumber { get; set; }
         public string IdNumber { get; set; }
         public string Location { get; set; }
-        public string? LicenseNumber { get; set; }
+        public string DateOfBirth { get; set; }
+        public string Password { get; set; }
         public List<string> UserRoles { get; set; }
-        public List<PractitionerType>? PractitionerType { get; set; }
-        public string Token { get; set; }
+        public string PractitionerType { get; set; }
     }
 }
