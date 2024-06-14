@@ -10,8 +10,4 @@
     <ProjectReference Include="..\EquityAfia.UserManagement.Domain\EquityAfia.UserManagement.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Authentication\ResetPassword\" />
-  </ItemGroup>
-
 </Project>

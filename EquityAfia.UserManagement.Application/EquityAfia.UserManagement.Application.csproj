@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authentication\Commands\ResetPassword\" />
     <Folder Include="Authentication\Commands\Register\" />
   </ItemGroup>
 
