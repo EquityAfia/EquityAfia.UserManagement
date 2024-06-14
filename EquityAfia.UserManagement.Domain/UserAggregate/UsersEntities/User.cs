@@ -52,7 +52,7 @@ namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
             UpdatedDate = DateTime.UtcNow;
         }
 
-        public void ClerResetToken(User user)
+        public void ClearResetToken(User user)
         {
             user.ResetToken = null;
         }

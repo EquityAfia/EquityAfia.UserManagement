@@ -4,10 +4,12 @@ using EquityAfia.UserManagement.Application.Authentication.Commands.Register.Reg
 using EquityAfia.UserManagement.Application.Authentication.Commands.ResetPassword;
 using EquityAfia.UserManagement.Application.Authentication.Queries.LogIn;
 using EquityAfia.UserManagement.Application.Interfaces;
+using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser;
 using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
+using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using EquityAfia.UserManagement.Infrastructure.Authentication;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using EquityAfia.UserManagement.Infrastructure.Repositories;
@@ -47,6 +49,8 @@ builder.Services.AddTransient<IRequestHandler<ForgotPasswordCommand, ForgotPassw
 
 builder.Services.AddTransient<IRequestHandler<ResetPasswordCommand, ResetPasswordResponse>, ResetPasswordCommandHandler>();
 
+// Register the GetUserCommandHandler
+builder.Services.AddTransient<IRequestHandler<GetUserCommand, GetUserResponse>, GetUserCommandHandler>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();

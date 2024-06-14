@@ -15,12 +15,12 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<User> GetUserByIdAsync(Guid userId)
+        public async Task<User> GetUserByIdAsync(string idNumber)
         {
             return await _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+                .FirstOrDefaultAsync(u => u.IdNumber == idNumber);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)

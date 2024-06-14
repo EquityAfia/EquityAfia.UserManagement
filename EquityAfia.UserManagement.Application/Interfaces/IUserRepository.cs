@@ -7,7 +7,7 @@ namespace EquityAfia.UserManagement.Application.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> GetUserByIdAsync(Guid userId);
+        Task<User> GetUserByIdAsync(string idNumber);
         Task<User> GetUserByEmailAsync(string email);
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
