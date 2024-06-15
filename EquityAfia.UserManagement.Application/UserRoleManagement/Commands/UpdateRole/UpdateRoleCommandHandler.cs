@@ -28,7 +28,7 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, UserR
 
         var response = new UserRoleResponse
         {
-            RoleId = updatedRole.RoleId, 
+            Message = "Role updated successfully",
             RoleName = updatedRole.RoleName
         };
 
