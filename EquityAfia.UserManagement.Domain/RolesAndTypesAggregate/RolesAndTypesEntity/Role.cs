@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+namespace EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 
 public class Role
 {

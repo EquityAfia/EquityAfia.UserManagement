@@ -1,9 +1,7 @@
-﻿using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
+﻿
+using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
 

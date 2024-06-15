@@ -5,7 +5,6 @@ using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.DeleteRo
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRoles;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
 {
     [ApiController]
-    [Route("Roles")]
+    [Route("User-Roles")]
     public class UserRoleController : ControllerBase
     {
         private readonly IMediator _mediator;
