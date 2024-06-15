@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using EquityAfia.UserManagement.Application.Authentication.Common;
 using BCrypt.Net;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
+using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser
 {

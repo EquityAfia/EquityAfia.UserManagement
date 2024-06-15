@@ -4,17 +4,21 @@ using EquityAfia.UserManagement.Application.Authentication.Commands.Register.Reg
 using EquityAfia.UserManagement.Application.Authentication.Commands.ResetPassword;
 using EquityAfia.UserManagement.Application.Authentication.Queries.LogIn;
 using EquityAfia.UserManagement.Application.Interfaces;
+using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser;
+using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
 using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Authentication;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using EquityAfia.UserManagement.Infrastructure.Repositories;
+using EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeManagement;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -51,9 +55,16 @@ builder.Services.AddTransient<IRequestHandler<ResetPasswordCommand, ResetPasswor
 builder.Services.AddTransient<IRequestHandler<GetUserQuery, GetUserResponse>, GetUserQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetAllUsersQuery, List<User>>, GetAllUsersQueryHandler>();
 
+
+//User Roles and Types
+builder.Services.AddTransient<IRequestHandler<AddRoleCommand, UserRoleResponse>, AddRoleCommandHandler>();
+
+
 // Register repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IUserTypeRepository, UserTypeRepository>();
+builder.Services.AddScoped<IPractitionerTypeRepository, PractitionerTypeRepository>();
 
 // Register JwtSettings from appsettings.json
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
