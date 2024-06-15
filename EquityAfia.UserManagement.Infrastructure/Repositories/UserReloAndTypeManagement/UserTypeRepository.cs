@@ -26,20 +26,18 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             return userTypes;
         }
 
-        public async Task<UserType> GetUserTypeByIdAsync(int userTypeId)
+        public async Task<UserType> GetUserTypeByNameAsync(string userTypeName)
         {
             var userType = await _dbContext.UserTypes
-                .Where(ut => ut.Id == userTypeId)
+                .Where(ut => ut.TypeName == userTypeName)
                 .FirstOrDefaultAsync();
 
             return userType;
         }
 
-        public async Task<int> AddUserTypeAsync(UserTypeRequest userTypeDto)
+        public async Task<int> AddUserTypeAsync(UserType userType)
         {
-            var userType = _mapper.Map<UserType>(userTypeDto);
-
-            _dbContext.UserTypes.Add(userType);
+            await _dbContext.UserTypes.AddAsync(userType);
             await _dbContext.SaveChangesAsync();
 
             return userType.Id;

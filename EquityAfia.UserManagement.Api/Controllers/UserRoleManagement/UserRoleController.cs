@@ -59,7 +59,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             return Ok(response); 
         }
 
-        [HttpPut("delete-roles/{roleId}")]
+        [HttpDelete("delete-roles/{roleId}")]
         public async Task<IActionResult> DeleteRole(int roleId)
         {
             var command = new DeleteRoleCommand(roleId);
