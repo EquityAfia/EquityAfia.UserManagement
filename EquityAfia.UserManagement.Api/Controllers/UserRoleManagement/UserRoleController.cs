@@ -3,7 +3,9 @@ using EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.DeleteRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
+using EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRoles;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
+using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -22,6 +24,19 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             _mapper = mapper;
             _mediator = mediator;
         }
+
+
+        [HttpGet("view-all-roles")]
+        public async Task<IActionResult> GetAllRoles()
+        {
+            var query = new GetRoleQuery();
+            var roles = await _mediator.Send(query);
+
+           // var response = _mapper.Map<List<UserRoleResponse>>(roles); 
+
+            return Ok(roles);
+        }
+
 
         [HttpPost("create-roles")]
         public async Task<IActionResult> AddUserRole([FromBody] UserRoleRequest userRoleRequest)

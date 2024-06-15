@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Authentication\Commands\Register\" />
-    <Folder Include="UserRoleManagement\Queries\GetRoles\" />
     <Folder Include="UserTypesManagement\Commands\AddUserType\" />
     <Folder Include="UserTypesManagement\Commands\DeleteUserType\" />
     <Folder Include="UserTypesManagement\Commands\UpdateUserType\" />

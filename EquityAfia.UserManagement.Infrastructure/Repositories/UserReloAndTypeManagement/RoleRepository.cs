@@ -15,6 +15,11 @@ public class RoleRepository : IRoleRepository
         _context = context;
     }
 
+    public async Task<List<Role>> GetAllRoles()
+    {
+        return await _context.Roles.ToListAsync();
+    }
+
     // Method to fetch a role by its ID
     public async Task<Role> GetRoleByIdAsync(int roleId)
     {
@@ -61,6 +66,5 @@ public class RoleRepository : IRoleRepository
 
         return role;
     }
-
 
 }
