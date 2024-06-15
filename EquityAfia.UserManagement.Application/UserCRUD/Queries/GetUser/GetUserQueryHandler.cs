@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
 {
-    public class GetUserCommandHandler : IRequestHandler<GetUserCommand, GetUserResponse>
+    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, GetUserResponse>
     {
         private readonly IUserRepository _userRepository;
 
         // Constructor should only include dependencies that can be injected
-        public GetUserCommandHandler(IUserRepository userRepository)
+        public GetUserQueryHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public async Task<GetUserResponse> Handle(GetUserCommand request, CancellationToken cancellationToken)
+        public async Task<GetUserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var Request = request.GetUserRequest;
             // Retrieve user by email or ID number asynchronously
