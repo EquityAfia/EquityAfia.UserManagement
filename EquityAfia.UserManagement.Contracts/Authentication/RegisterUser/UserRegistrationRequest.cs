@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿
 
 namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
 {

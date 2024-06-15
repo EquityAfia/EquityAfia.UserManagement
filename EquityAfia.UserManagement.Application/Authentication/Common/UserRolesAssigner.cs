@@ -1,10 +1,8 @@
-﻿using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿
+using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Common
 {

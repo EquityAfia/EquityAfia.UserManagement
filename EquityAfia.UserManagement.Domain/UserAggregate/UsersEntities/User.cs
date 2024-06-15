@@ -1,5 +1,5 @@
 ﻿using BCrypt.Net;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

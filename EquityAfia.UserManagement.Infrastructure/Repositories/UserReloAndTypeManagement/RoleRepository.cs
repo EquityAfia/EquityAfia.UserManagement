@@ -1,5 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;

@@ -1,6 +1,5 @@
 ﻿
 
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 
 namespace EquityAfia.UserManagement.Application.Interfaces

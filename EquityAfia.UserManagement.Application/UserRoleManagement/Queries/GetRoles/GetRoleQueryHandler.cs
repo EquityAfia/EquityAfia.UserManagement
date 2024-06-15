@@ -1,6 +1,6 @@
 ﻿
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using MediatR;
 
 namespace EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRoles

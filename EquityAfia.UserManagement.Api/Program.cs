@@ -11,13 +11,14 @@ using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.DeleteRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRoles;
+using EquityAfia.UserManagement.Application.UserTypesManagement.Queries.GetUserTypes;
 using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Authentication;
 using EquityAfia.UserManagement.Infrastructure.Data;
@@ -60,11 +61,14 @@ builder.Services.AddTransient<IRequestHandler<GetUserQuery, GetUserResponse>, Ge
 builder.Services.AddTransient<IRequestHandler<GetAllUsersQuery, List<User>>, GetAllUsersQueryHandler>();
 
 
-//User Roles and Types
+//User Roles
 builder.Services.AddTransient<IRequestHandler<AddRoleCommand, UserRoleResponse>, AddRoleCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateRoleCommand, UserRoleResponse>, UpdateRoleCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<DeleteRoleCommand, UserRoleResponse>, DeleteRoleCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<GetRoleQuery, List<Role>>, GetRoleQueryHandler>();
+
+//User Types
+builder.Services.AddTransient<IRequestHandler<GetUserTypeQuery, List<UserType>>, GetUserTypeQueryHandler>();
 
 
 // Register repositories

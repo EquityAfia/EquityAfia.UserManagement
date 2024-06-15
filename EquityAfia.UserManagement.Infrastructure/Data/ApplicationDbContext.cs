@@ -1,6 +1,6 @@
 ﻿using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 using Microsoft.EntityFrameworkCore;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 
 namespace EquityAfia.UserManagement.Infrastructure.Data
 {

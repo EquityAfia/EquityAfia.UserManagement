@@ -1,6 +1,4 @@
-﻿
-
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 
 namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
 {

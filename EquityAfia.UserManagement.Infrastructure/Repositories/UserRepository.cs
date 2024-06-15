@@ -1,5 +1,5 @@
-﻿using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+﻿
+using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

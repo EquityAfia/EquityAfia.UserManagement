@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
-using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,22 +18,21 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             _mapper = mapper;
         }
 
-        public async Task<List<UserTypeRequest>> GetAllUserTypesAsync()
+        public async Task<List<UserType>> GetAllUserTypesAsync()
         {
             var userTypes = await _dbContext.UserTypes
-                .Select(ut => _mapper.Map<UserTypeRequest>(ut))
                 .ToListAsync();
 
             return userTypes;
         }
 
-        public async Task<UserTypeRequest> GetUserTypeByIdAsync(int userTypeId)
+        public async Task<UserType> GetUserTypeByIdAsync(int userTypeId)
         {
             var userType = await _dbContext.UserTypes
                 .Where(ut => ut.Id == userTypeId)
                 .FirstOrDefaultAsync();
 
-            return _mapper.Map<UserTypeRequest>(userType);
+            return userType;
         }
 
         public async Task<int> AddUserTypeAsync(UserTypeRequest userTypeDto)
