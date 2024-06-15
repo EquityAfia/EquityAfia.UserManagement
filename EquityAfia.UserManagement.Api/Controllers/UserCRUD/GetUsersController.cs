@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using MediatR;
@@ -20,10 +21,10 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get-one-user")]
         public async Task<IActionResult> GetUserByEmail([FromQuery] GetUserRequest getUserRequest = null)
         {
-            var command = new GetUserCommand(getUserRequest);
+            var command = new GetUserQuery(getUserRequest);
 
             var response = await _mediator.Send(command);
 
@@ -35,6 +36,15 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             var mappedResponse = _mapper.Map<GetUserResponse>(response);
 
             return Ok(mappedResponse);
+        }
+
+        [HttpGet("get-all-users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var query = new GetAllUsersQuery();
+            var users = await _mediator.Send(query);
+
+            return Ok(users);
         }
     }
 }

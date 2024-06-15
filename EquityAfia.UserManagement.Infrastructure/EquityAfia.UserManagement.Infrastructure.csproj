@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Configurations\AutoMapperConfig\" />
     <Folder Include="Configurations\EntityConfigurations\" />
   </ItemGroup>
 
