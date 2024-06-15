@@ -5,6 +5,7 @@ using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using MediatR;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
+using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner
 {

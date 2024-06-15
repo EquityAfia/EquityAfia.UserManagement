@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 
 public class Role
 {
-  //  [Key]
+    [Key]
     public int RoleId { get; set; }
 
     [Required]

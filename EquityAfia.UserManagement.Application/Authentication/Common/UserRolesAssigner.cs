@@ -4,6 +4,7 @@ using EquityAfia.UserManagement.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Common
 {
