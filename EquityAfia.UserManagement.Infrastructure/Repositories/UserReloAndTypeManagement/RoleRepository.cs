@@ -24,7 +24,8 @@ public class RoleRepository : IRoleRepository
     // Method to fetch a role by its name
     public async Task<Role> GetRoleByNameAsync(string roleName)
     {
-        return await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName);
+        return await _context.Roles
+            .FirstOrDefaultAsync(r => r.RoleName == roleName);
     }
 
     // Method to add a new role
@@ -32,7 +33,7 @@ public class RoleRepository : IRoleRepository
     {
         _context.Roles.Add(role);
         await _context.SaveChangesAsync();
-        return role.RoleId; // This will be populated by the database after save
+        return role.RoleId; 
     }
 
 
