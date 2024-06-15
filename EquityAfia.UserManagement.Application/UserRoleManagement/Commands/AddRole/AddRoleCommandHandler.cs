@@ -30,12 +30,16 @@ public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, UserRoleRes
             
         };
 
-        await _roleRepository.AddRoleAsync(roleToAdd); 
+        await _roleRepository.AddRoleAsync(roleToAdd);
+        var addedRole = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
+
+        var Id = addedRole.RoleId;
 
         var roleResponse = new UserRoleResponse
         {
-            RoleName = roleToAdd.RoleName,
-            
+            Message = "Role Added Successfully",
+            RoleId = Id,
+            RoleName = roleToAdd.RoleName            
         };
 
         return roleResponse;

@@ -5,7 +5,10 @@ namespace EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeReposi
 
 public interface IRoleRepository
 {
+    
+    Task<List<Role>> GetAllRoles();
     Task<Role> GetRoleByIdAsync(int roleId);
+
     Task<Role> GetRoleByNameAsync(string roleName);
     Task<int> AddRoleAsync(Role role);
     Task<Role> UpdateRoleAsync(int roleId, string newRoleName);
