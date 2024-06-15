@@ -7,7 +7,6 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
     {
         public GetUserRequest GetUserRequest { get; set; }
 
-        // Constructor to initialize the command with either email or ID number
         public GetUserQuery(GetUserRequest getUserRequest = null)
         {
             GetUserRequest = getUserRequest;
