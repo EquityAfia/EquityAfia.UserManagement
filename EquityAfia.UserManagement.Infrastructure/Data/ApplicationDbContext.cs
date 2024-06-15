@@ -32,7 +32,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.Id); // Corrected ForeignKey to UserId
+                .HasForeignKey(ur => ur.Id); 
 
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.Role)
@@ -41,7 +41,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
 
             modelBuilder.Entity<PractitionerType>()
                 .HasOne(pt => pt.Practitioner)
-                .WithMany(p => p.PractitionerTypes) // Matches the navigation property in Practitioner
+                .WithMany(p => p.PractitionerTypes) 
                 .HasForeignKey(pt => pt.PractitionerId);
 
             modelBuilder.Entity<PractitionerType>()

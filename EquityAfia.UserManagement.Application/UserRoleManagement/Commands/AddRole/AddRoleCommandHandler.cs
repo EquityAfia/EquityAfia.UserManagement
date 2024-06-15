@@ -21,7 +21,7 @@ namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddR
             var role = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
             if (role != null)
             {
-                throw new Exception("Role with that Name already exists");
+                throw new Exception($"Role with the Name '{request.UserRoleRequest.RoleName}' already exists");
             }
 
             var roleToAdd = new Role
