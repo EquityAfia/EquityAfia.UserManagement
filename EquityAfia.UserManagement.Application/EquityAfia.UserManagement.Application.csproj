@@ -14,7 +14,6 @@
   <ItemGroup>
     <Folder Include="Authentication\Commands\Register\" />
     <Folder Include="UserRoleManagement\Commands\DeleteRole\" />
-    <Folder Include="UserRoleManagement\Commands\UpdateRole\" />
     <Folder Include="UserRoleManagement\Queries\GetRoles\" />
     <Folder Include="UserTypesManagement\Commands\AddUserType\" />
     <Folder Include="UserTypesManagement\Commands\DeleteUserType\" />
