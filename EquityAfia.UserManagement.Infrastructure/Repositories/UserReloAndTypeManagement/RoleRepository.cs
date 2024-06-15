@@ -48,5 +48,19 @@ public class RoleRepository : IRoleRepository
         }
     }
 
+    public async Task<Role> UpdateRoleAsync(int roleId, string newRoleName)
+    {
+        var role = await _context.Roles.FindAsync(roleId);
+        if (role == null)
+        {
+            throw new Exception($"Role with ID '{roleId}' does not exist.");
+        }
+
+        role.RoleName = newRoleName;
+        await _context.SaveChangesAsync();
+
+        return role;
+    }
+
 
 }

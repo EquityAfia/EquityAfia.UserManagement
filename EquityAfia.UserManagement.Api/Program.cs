@@ -8,6 +8,7 @@ using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositori
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
+using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
 using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
@@ -58,6 +59,7 @@ builder.Services.AddTransient<IRequestHandler<GetAllUsersQuery, List<User>>, Get
 
 //User Roles and Types
 builder.Services.AddTransient<IRequestHandler<AddRoleCommand, UserRoleResponse>, AddRoleCommandHandler>();
+builder.Services.AddTransient<IRequestHandler<UpdateRoleCommand, UserRoleResponse>, UpdateRoleCommandHandler>();
 
 
 // Register repositories

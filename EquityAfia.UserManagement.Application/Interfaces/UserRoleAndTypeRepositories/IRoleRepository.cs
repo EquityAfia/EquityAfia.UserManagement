@@ -8,6 +8,8 @@ public interface IRoleRepository
     Task<Role> GetRoleByIdAsync(int roleId);
     Task<Role> GetRoleByNameAsync(string roleName);
     Task<int> AddRoleAsync(Role role);
+    Task<Role> UpdateRoleAsync(int roleId, string newRoleName);
+
     Task DeleteRoleAsync(int roleId);
 
 }
