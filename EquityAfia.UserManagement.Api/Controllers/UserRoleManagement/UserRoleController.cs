@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
+using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.DeleteRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
 using MediatR;
@@ -42,6 +43,20 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             var response = await _mediator.Send(command);
 
             return Ok(response); 
+        }
+
+        [HttpPut("delete-roles/{roleId}")]
+        public async Task<IActionResult> DeleteRole(int roleId)
+        {
+            var command = new DeleteRoleCommand(roleId);
+
+            var response = await _mediator.Send(command);
+            var mappedResponse = new UserRoleResponse
+            {
+                Message = response.Message
+            };
+
+            return Ok(mappedResponse);
         }
     }
 }

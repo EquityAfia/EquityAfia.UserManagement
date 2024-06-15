@@ -8,7 +8,8 @@ namespace EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole
 {
     public class UserRoleResponse
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int? RoleId { get; set; }
+        public string? RoleName { get; set; }
+        public string? Message { get; set; }
     }
 }

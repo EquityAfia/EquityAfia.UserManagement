@@ -5,40 +5,39 @@ using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity;
 
-namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole
+namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
+
+public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, UserRoleResponse>
 {
-    public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, UserRoleResponse>
+    private readonly IRoleRepository _roleRepository;
+
+    public AddRoleCommandHandler(IRoleRepository roleRepository)
     {
-        private readonly IRoleRepository _roleRepository;
+        _roleRepository = roleRepository;
+    }
 
-        public AddRoleCommandHandler(IRoleRepository roleRepository)
+    public async Task<UserRoleResponse> Handle(AddRoleCommand request, CancellationToken cancellationToken)
+    {
+        var role = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
+        if (role != null)
         {
-            _roleRepository = roleRepository;
+            throw new Exception($"Role with the Name '{request.UserRoleRequest.RoleName}' already exists");
         }
 
-        public async Task<UserRoleResponse> Handle(AddRoleCommand request, CancellationToken cancellationToken)
+        var roleToAdd = new Role
         {
-            var role = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
-            if (role != null)
-            {
-                throw new Exception($"Role with the Name '{request.UserRoleRequest.RoleName}' already exists");
-            }
+            RoleName = request.UserRoleRequest.RoleName, 
+            
+        };
 
-            var roleToAdd = new Role
-            {
-                RoleName = request.UserRoleRequest.RoleName, 
-                
-            };
+        await _roleRepository.AddRoleAsync(roleToAdd); 
 
-            await _roleRepository.AddRoleAsync(roleToAdd); 
+        var roleResponse = new UserRoleResponse
+        {
+            RoleName = roleToAdd.RoleName,
+            
+        };
 
-            var roleResponse = new UserRoleResponse
-            {
-                RoleName = roleToAdd.RoleName,
-                
-            };
-
-            return roleResponse;
-        }
+        return roleResponse;
     }
 }
