@@ -5,6 +5,7 @@ using EquityAfia.UserManagement.Application.Authentication.Commands.ResetPasswor
 using EquityAfia.UserManagement.Application.Authentication.Queries.LogIn;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
+using EquityAfia.UserManagement.Application.UserCRUD.Commands.DeleteUser;
 using EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser;
@@ -20,6 +21,7 @@ using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
+using EquityAfia.UserManagement.Contracts.UserCRUD.DeleteUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
@@ -68,7 +70,7 @@ builder.Services.AddTransient<IRequestHandler<ResetPasswordCommand, ResetPasswor
 builder.Services.AddTransient<IRequestHandler<GetUserQuery, GetUserResponse>, GetUserQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetAllUsersQuery, List<User>>, GetAllUsersQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateUserCommand, UpdateUserResponse>, UpdateUserCommandHandler>();
-
+builder.Services.AddTransient<IRequestHandler<DeleteUserCommand, DeleteUserResponse>, DeleteUserCommandHandler>();
 
 
 //User Roles
