@@ -10,6 +10,7 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.ResetPassword
     public class ResetPasswordRequest
     {
         [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage ="Please provide a valid email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Reset code is required")]
