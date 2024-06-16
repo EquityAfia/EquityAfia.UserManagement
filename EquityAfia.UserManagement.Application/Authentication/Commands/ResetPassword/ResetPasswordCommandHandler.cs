@@ -15,35 +15,42 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ResetPas
 
         public async Task<ResetPasswordResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
-            var Request = request.ResetPasswordRequest;
-
-            var user = await _userRepository.GetUserByEmailAsync(Request.Email);
-
-            if(user == null)
+            try
             {
-                throw new UnauthorizedAccessException("User not found");
+                var Request = request.ResetPasswordRequest;
+
+                var user = await _userRepository.GetUserByEmailAsync(Request.Email);
+
+                if (user == null)
+                {
+                    throw new UnauthorizedAccessException("User not found");
+                }
+
+                var isResetCodeValid = BCrypt.Net.BCrypt.Verify(Request.ResetCode, user.ResetToken);
+
+                if (!isResetCodeValid)
+                {
+                    throw new UnauthorizedAccessException("Reset code is not valid");
+                }
+
+                var newPassword = Request.NewPassword;
+                user.ChangePassword(newPassword);
+
+                user.ClearResetToken(user);
+
+                await _userRepository.UpdateUserAsync(user);
+
+                var response = new ResetPasswordResponse
+                {
+                    Message = "Password reset successfully"
+                };
+
+                return response;
             }
-
-            var isResetCodeValid = BCrypt.Net.BCrypt.Verify(Request.ResetCode, user.ResetToken);
-
-            if (!isResetCodeValid)
+            catch (Exception ex)
             {
-                throw new UnauthorizedAccessException("Reset code is not valid");
+                throw new ApplicationException("An unexcpected error occoured while executing reset password command handler", ex);
             }
-
-            var newPassword = Request.NewPassword;
-            user.ChangePassword(newPassword);
-
-            user.ClearResetToken(user);
-
-            await _userRepository.UpdateUserAsync(user);
-
-            var response = new ResetPasswordResponse
-            {
-                Message = "Password reset successfully"
-            };
-
-            return response;
         }
     }
 }

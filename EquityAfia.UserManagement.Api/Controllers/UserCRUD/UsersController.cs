@@ -28,47 +28,74 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
         [HttpGet("get-one-user")]
         public async Task<IActionResult> GetUserByEmail([FromQuery] GetUserRequest getUserRequest = null)
         {
-            var query = new GetUserQuery(getUserRequest);
-
-            var response = await _mediator.Send(query);
-
-            if (response == null)
+            try
             {
-                return NotFound("User not found");
+                var query = new GetUserQuery(getUserRequest);
+
+                var response = await _mediator.Send(query);
+
+                if (response == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                var mappedResponse = _mapper.Map<GetUserResponse>(response);
+
+                return Ok(mappedResponse);
+            }catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing get one user controller: {ex.Message}");
             }
-
-            var mappedResponse = _mapper.Map<GetUserResponse>(response);
-
-            return Ok(mappedResponse);
         }
 
         [HttpGet("get-all-users")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var query = new GetAllUsersQuery();
-            var users = await _mediator.Send(query);
+            try
+            {
+                var query = new GetAllUsersQuery();
+                var users = await _mediator.Send(query);
 
-            return Ok(users);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing get all users controller: {ex.Message}");
+            }
         }
 
         [HttpPut("update-user")]
         public async Task<IActionResult> UpdateUserDetails(string? idNumber, string? email, [FromBody] UpdateUserRequest updateUserRequest)
         {
-            var command = new UpdateUserCommand(updateUserRequest);
-            var response = await _mediator.Send(command);
+            try
+            {
+                var command = new UpdateUserCommand(updateUserRequest);
+                var response = await _mediator.Send(command);
 
-            var mappedResponse = _mapper.Map<UpdateUserResponse>(response); 
-            return Ok(mappedResponse);
+                var mappedResponse = _mapper.Map<UpdateUserResponse>(response);
+                return Ok(mappedResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing update user controller: {ex.Message}");
+            }
         }
 
         [HttpDelete("delete-user")]
         public async Task<IActionResult> DeleteUser(string? IdNumber, string? Email)
         {
-            var command = new DeleteUserCommand();
-            var response = await _mediator.Send(command);
+            try
+            {
+                var command = new DeleteUserCommand();
+                var response = await _mediator.Send(command);
 
-            var mappedResponse = _mapper.Map<DeleteUserResponse>(response);
-            return Ok(mappedResponse);
+                var mappedResponse = _mapper.Map<DeleteUserResponse>(response);
+                return Ok(mappedResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing delete user controller: {ex.Message}");
+            }
         }
     }
 }

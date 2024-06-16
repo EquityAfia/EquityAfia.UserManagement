@@ -24,24 +24,38 @@ public class PasswordController : ControllerBase
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswordRequest forgotPasswordRequest)
     {
-        var forgotPasswordCommand = new ForgotPasswordCommand(forgotPasswordRequest);
+        try
+        {
+            var forgotPasswordCommand = new ForgotPasswordCommand(forgotPasswordRequest);
 
-        var response = await _mediator.Send(forgotPasswordCommand);
+            var response = await _mediator.Send(forgotPasswordCommand);
 
-        var mappedResponse = _mapper.Map<ForgotPasswordResponse>(response);
+            var mappedResponse = _mapper.Map<ForgotPasswordResponse>(response);
 
-        return Ok(mappedResponse);
+            return Ok(mappedResponse);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An unexpecded error occoured at forgot password controller: {ex}");
+        }
     }
 
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest resetRequest)
     {
-        var command = new ResetPasswordCommand(resetRequest);
+        try
+        {
+            var command = new ResetPasswordCommand(resetRequest);
 
-        var response = await _mediator.Send(command);
+            var response = await _mediator.Send(command);
 
-        var mappedResponse = _mapper.Map<ResetPasswordResponse>(response);
+            var mappedResponse = _mapper.Map<ResetPasswordResponse>(response);
 
-        return Ok(mappedResponse);
+            return Ok(mappedResponse);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An unexpecded error occoured at reset password controller: {ex} ");
+        }
     }
 }

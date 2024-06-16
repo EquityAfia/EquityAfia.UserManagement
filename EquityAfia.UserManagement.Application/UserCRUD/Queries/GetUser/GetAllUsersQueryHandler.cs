@@ -19,9 +19,16 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers
 
         public async Task<List<User>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await _userRepository.GetAllUsersAsync();
+            try
+            {
+                var users = await _userRepository.GetAllUsersAsync();
 
-            return users;
+                return users;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexcpected error occoured while executing get all users query handler", ex);
+            }
         }
     }
 }

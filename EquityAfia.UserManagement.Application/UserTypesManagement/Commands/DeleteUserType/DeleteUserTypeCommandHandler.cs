@@ -18,21 +18,29 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.Del
         }
         public async Task<UserTypeResponse> Handle(DeleteUserTypeCommand request, CancellationToken cancellationToken)
         {
-            var userType = await _userTypeRepository.GetUserTypeByIdAsync(request.TypeId);
-            if (userType == null)
+            try
             {
-                throw new Exception($"User type with the ID '{request.TypeId}' does not exist");
+                var userType = await _userTypeRepository.GetUserTypeByIdAsync(request.TypeId);
+                if (userType == null)
+                {
+                    throw new Exception($"User type with the ID '{request.TypeId}' does not exist");
+                }
+
+                await _userTypeRepository.DeleteUserTypeAsync(request.TypeId);
+
+                var response = new UserTypeResponse
+                {
+                    Message = "User Type deleted successfully",
+                    TypeId = request.TypeId,
+                };
+
+                return response;
             }
-
-            await _userTypeRepository.DeleteUserTypeAsync(request.TypeId);
-
-            var response = new UserTypeResponse
+            catch (Exception ex)
             {
-                Message = "User Type deleted successfully",
-                TypeId = request.TypeId,
-            };
+                throw new ApplicationException("An unexpected error occoured while executing delete user type command handler", ex);
 
-            return response;
+            }
         }
     }
 }

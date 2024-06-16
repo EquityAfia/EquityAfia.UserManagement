@@ -22,13 +22,20 @@ namespace EquityAfia.UserManagement.Api.Controllers.Authentication.Login
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            var query = new LoginQuery(loginRequest);
+            try
+            {
+                var query = new LoginQuery(loginRequest);
 
-            var logIn = await _mediator.Send(query);
+                var logIn = await _mediator.Send(query);
 
-            var mappedResponse = _mapper.Map<LoginResponse>(logIn);
+                var mappedResponse = _mapper.Map<LoginResponse>(logIn);
 
-            return Ok(mappedResponse);
+                return Ok(mappedResponse);
+
+            } catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpecded error occoured at log in controller: {ex} ");
+            }
         }
     }
 }

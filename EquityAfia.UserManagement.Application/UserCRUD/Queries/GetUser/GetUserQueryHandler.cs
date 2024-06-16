@@ -19,28 +19,35 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
 
         public async Task<GetUserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var Request = request.GetUserRequest;
-            // Retrieve user by email or ID number asynchronously
-            var user = await _userRepository.GetUserByEmailOrIdNumberAsync(Request.Email, Request.IdNumber); 
-            if (user == null)
+            try
             {
-                throw new ApplicationException("User not found");
+                var Request = request.GetUserRequest;
+
+                var user = await _userRepository.GetUserByEmailOrIdNumberAsync(Request.Email, Request.IdNumber);
+                if (user == null)
+                {
+                    throw new ApplicationException("User not found");
+                }
+
+                // Map the user entity to the GetUserResponse DTO
+                var response = new GetUserResponse
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    IdNumber = user.IdNumber,
+                    Location = user.Location,
+                    DateOfBirth = user.DateOfBirth,
+                    UserType = user.UserType
+                };
+
+                return response;
             }
-
-            // Map the user entity to the GetUserResponse DTO
-            var response = new GetUserResponse
+            catch (Exception ex)
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                IdNumber = user.IdNumber,
-                Location = user.Location,
-                DateOfBirth = user.DateOfBirth,
-                UserType = user.UserType
-            };
-
-            return response;
+                throw new ApplicationException("An unexcpected error occoured while executing get one user command handler", ex);
+            }
         }
     }
 }

@@ -20,35 +20,41 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
 
         public async Task<UpdateUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            // Fetch the user by email or ID number
-            var user = await _userRepository.GetUserByEmailOrIdNumberAsync(request.Email, request.IdNumber);
-            if (user == null)
+            try
             {
-                throw new Exception("User not found!!");
+                var user = await _userRepository.GetUserByEmailOrIdNumberAsync(request.Email, request.IdNumber);
+                if (user == null)
+                {
+                    throw new Exception("User not found!!");
+                }
+
+                // Update user information
+                user.UpdateUserInfo(
+                    request.UpdateUserRequest.FirstName,
+                    request.UpdateUserRequest.LastName,
+                    user.Email,
+                    request.UpdateUserRequest.PhoneNumber,
+                    request.UpdateUserRequest.Location,
+                    user.DateOfBirth
+                );
+
+                await _userRepository.UpdateUserAsync(user);
+
+                var response = new UpdateUserResponse
+                {
+                    Message = "User updated successfully",
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    Location = user.Location
+                };
+
+                return response;
             }
-
-            // Update user information
-            user.UpdateUserInfo(
-                request.UpdateUserRequest.FirstName,
-                request.UpdateUserRequest.LastName,
-                user.Email, 
-                request.UpdateUserRequest.PhoneNumber,
-                request.UpdateUserRequest.Location,
-                user.DateOfBirth 
-            );
-
-            await _userRepository.UpdateUserAsync(user);
-
-            var response = new UpdateUserResponse
+            catch (Exception ex)
             {
-                Message = "User updated successfully",
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
-                Location = user.Location
-            };
-
-            return response;
+                throw new ApplicationException("An unexpected error occoured while executing update user command handler", ex);
+            }
         }
     }
 }

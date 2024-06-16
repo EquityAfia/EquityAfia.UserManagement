@@ -13,29 +13,37 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.Upd
         }
         public async Task<UserTypeResponse> Handle(UpdateUserTypeCommand request, CancellationToken cancellationToken)
         {
-            var Request = request.TypeRequest;
-
-            var userType = await _userTypeRepository.GetUserTypeByIdAsync(request.TypeId);
-            if (userType == null)
+            try
             {
-                throw new Exception($"User type with ID '{request.TypeId}' does not exist");
+                var Request = request.TypeRequest;
+
+                var userType = await _userTypeRepository.GetUserTypeByIdAsync(request.TypeId);
+                if (userType == null)
+                {
+                    throw new Exception($"User type with ID '{request.TypeId}' does not exist");
+                }
+
+                var typeToUpdate = new UserTypeRequest
+                {
+                    TypeName = Request.TypeName
+                };
+
+                await _userTypeRepository.UpdateUserTypeAsync(request.TypeId, typeToUpdate);
+
+                var response = new UserTypeResponse
+                {
+                    Message = "User type updated successfully",
+                    TypeId = request.TypeId,
+                    TypeName = typeToUpdate.TypeName
+                };
+
+                return response;
             }
-
-            var typeToUpdate = new UserTypeRequest
+            catch (Exception ex)
             {
-                TypeName = Request.TypeName
-            };
+                throw new ApplicationException("An unexpected error occoured while executing update user type command handler", ex);
 
-            await _userTypeRepository.UpdateUserTypeAsync(request.TypeId,typeToUpdate);
-
-            var response = new UserTypeResponse
-            {
-                Message = "User type updated successfully",
-                TypeId = request.TypeId,
-                TypeName = typeToUpdate.TypeName
-            };
-
-            return response;
+            }
         }
     }
 }

@@ -16,13 +16,21 @@ namespace EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRo
 
         public Task<List<Role>> Handle(GetRoleQuery request, CancellationToken cancellationToken)
         {
-            var roles = _roleRepository.GetAllRoles();
-            if (roles == null)
+            try
             {
-                throw new Exception("The list of roles is empty");
-            }
+                var roles = _roleRepository.GetAllRoles();
+                if (roles == null)
+                {
+                    throw new Exception("The list of roles is empty");
+                }
 
-            return roles;
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occoured while executing get role query handler", ex);
+
+            }
         }
     }
 }

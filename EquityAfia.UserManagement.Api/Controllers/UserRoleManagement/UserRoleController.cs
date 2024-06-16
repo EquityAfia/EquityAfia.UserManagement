@@ -28,49 +28,75 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
         [HttpGet("view-all-roles")]
         public async Task<IActionResult> GetAllRoles()
         {
-            var query = new GetRoleQuery();
-            var roles = await _mediator.Send(query);
+            try
+            {
+                var query = new GetRoleQuery();
+                var roles = await _mediator.Send(query);
 
-           // var response = _mapper.Map<List<UserRoleResponse>>(roles); 
-
-            return Ok(roles);
+                return Ok(roles);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing view all user roles controller: {ex.Message}");
+            }
         }
 
 
         [HttpPost("create-roles")]
         public async Task<IActionResult> AddUserRole([FromBody] UserRoleRequest userRoleRequest)
         {
-            var command = new AddRoleCommand(userRoleRequest);
+            try
+            {
+                var command = new AddRoleCommand(userRoleRequest);
 
-            var response = await _mediator.Send(command);
+                var response = await _mediator.Send(command);
 
-            var mappedResponse = _mapper.Map<UserRoleResponse>(response);
+                var mappedResponse = _mapper.Map<UserRoleResponse>(response);
 
-            return Ok(mappedResponse);
+                return Ok(mappedResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing create user role controller: {ex.Message}");
+            }
         }
 
         [HttpPut("update-roles/{roleId}")]
         public async Task<IActionResult> UpdateRoles(int roleId, [FromBody] UserRoleRequest userRoleRequest)
         {
-            var command = new UpdateRoleCommand(roleId, userRoleRequest.RoleName);
+            try
+            {
+                var command = new UpdateRoleCommand(roleId, userRoleRequest.RoleName);
 
-            var response = await _mediator.Send(command);
+                var response = await _mediator.Send(command);
 
-            return Ok(response); 
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing update user role controller: {ex.Message}");
+            }
         }
 
         [HttpDelete("delete-roles/{roleId}")]
         public async Task<IActionResult> DeleteRole(int roleId)
         {
-            var command = new DeleteRoleCommand(roleId);
-
-            var response = await _mediator.Send(command);
-            var mappedResponse = new UserRoleResponse
+            try
             {
-                Message = response.Message
-            };
+                var command = new DeleteRoleCommand(roleId);
 
-            return Ok(mappedResponse);
+                var response = await _mediator.Send(command);
+                var mappedResponse = new UserRoleResponse
+                {
+                    Message = response.Message
+                };
+
+                return Ok(mappedResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An unexpected error occoured while executing delete user role controller: {ex.Message}");
+            }
         }
     }
 }

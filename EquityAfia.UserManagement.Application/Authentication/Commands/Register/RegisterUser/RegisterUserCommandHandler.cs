@@ -26,42 +26,49 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
 
         public async Task<RegisterResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var userDto = request.User;
-
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-
-            var user = new User
+            try
             {
-                Id = Guid.NewGuid(),
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                Email = userDto.Email,
-                PhoneNumber = userDto.PhoneNumber,
-                IdNumber = userDto.IdNumber,
-                Location = userDto.Location,
-                DateOfBirth = userDto.DateOfBirth,
-                Password = hashedPassword,  // Ensure to hash the password in a real scenario
-                CreatedDate = DateTime.UtcNow,
-                UpdatedDate = DateTime.UtcNow
-            };
+                var userDto = request.User;
 
-            var token =  _jwtTokenGenerator.GenerateToken(user);
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
-            await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
+                var user = new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = userDto.FirstName,
+                    LastName = userDto.LastName,
+                    Email = userDto.Email,
+                    PhoneNumber = userDto.PhoneNumber,
+                    IdNumber = userDto.IdNumber,
+                    Location = userDto.Location,
+                    DateOfBirth = userDto.DateOfBirth,
+                    Password = hashedPassword,  // Ensure to hash the password in a real scenario
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedDate = DateTime.UtcNow
+                };
 
-            var response = new RegisterResponse
+                var token = _jwtTokenGenerator.GenerateToken(user);
+
+                await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
+
+                var response = new RegisterResponse
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    IdNumber = user.IdNumber,
+                    Location = user.Location,
+                    UserRoles = userDto.UserRoles,
+                    Token = token
+                };
+
+                return response;
+            }
+            catch (Exception ex)
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                IdNumber = user.IdNumber,
-                Location = user.Location,
-                UserRoles = userDto.UserRoles,
-                Token = token
-            };
-        
-            return response;
+                throw new ApplicationException("An unexpected error occoured while executing register user command handler", ex);
+            }
         }
     }
 }

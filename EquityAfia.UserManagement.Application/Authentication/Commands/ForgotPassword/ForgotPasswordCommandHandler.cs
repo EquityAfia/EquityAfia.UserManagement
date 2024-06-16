@@ -16,31 +16,37 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPa
 
         public async Task<ForgotPasswordResponse> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
-            var Request = request.ForgotPasswordRequest;
-            var user = await _repository.GetUserByEmailAsync(Request.Email);
-
-            if (user == null)
+            try
             {
-                throw new UnauthorizedAccessException("User not found");
+                var Request = request.ForgotPasswordRequest;
+                var user = await _repository.GetUserByEmailAsync(Request.Email);
+
+                if (user == null)
+                {
+                    throw new UnauthorizedAccessException("User not found");
+                }
+
+                var resetToken = _jwtTokenGenerator.GenerateRandomToken(user);
+
+                user.ResetToken = resetToken;
+
+                user.SetResetToken(resetToken);
+
+                await _repository.UpdateUserAsync(user);
+
+                // Send the token to the email
+
+                var response = new ForgotPasswordResponse
+                {
+                    Email = user.Email,
+                    ResetCode = resetToken
+                };
+
+                return response;
+            } catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occoured while executing forgot password command handler", ex);
             }
-
-            var resetToken =  _jwtTokenGenerator.GenerateRandomToken(user);
-
-            user.ResetToken = resetToken;
-
-            user.SetResetToken(resetToken);
-
-            await _repository.UpdateUserAsync(user);
-
-            // Send the token to the email
-
-            var response = new ForgotPasswordResponse
-            {
-                Email = user.Email,
-                ResetCode = resetToken
-            };
-
-            return response;
         }
     }
 }
