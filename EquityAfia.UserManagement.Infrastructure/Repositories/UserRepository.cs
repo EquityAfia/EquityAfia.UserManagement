@@ -1,5 +1,7 @@
 ﻿
+using AutoMapper;
 using EquityAfia.UserManagement.Application.Interfaces;
+using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +11,12 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -50,10 +54,11 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task<User> UpdateUserAsync(User user)
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
+            return user;
         }
 
         public async Task DeleteUserAsync(Guid userId)
@@ -65,6 +70,5 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
     }
 }
