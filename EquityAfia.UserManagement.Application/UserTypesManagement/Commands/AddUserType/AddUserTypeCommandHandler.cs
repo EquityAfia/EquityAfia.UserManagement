@@ -21,31 +21,39 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.Add
 
         public async Task<UserTypeResponse> Handle(AddUserTypeCommand request, CancellationToken cancellationToken)
         {
-            var Request = request.UserTypeRequest;
-
-            var userType = await _userTypeRepository.GetUserTypeByNameAsync(Request.TypeName);
-            if (userType != null)
+            try
             {
-                throw new Exception($"User type {Request.TypeName} already exist");
+                var Request = request.UserTypeRequest;
+
+                var userType = await _userTypeRepository.GetUserTypeByNameAsync(Request.TypeName);
+                if (userType != null)
+                {
+                    throw new Exception($"User type {Request.TypeName} already exist");
+                }
+
+                var typeToAdd = new UserType
+                {
+                    TypeName = Request.TypeName,
+                };
+
+                await _userTypeRepository.AddUserTypeAsync(typeToAdd);
+
+                var addedRole = await _userTypeRepository.GetUserTypeByNameAsync(typeToAdd.TypeName);
+
+                var response = new UserTypeResponse
+                {
+                    Message = "Role added successfully",
+                    TypeId = addedRole.Id,
+                    TypeName = Request.TypeName
+                };
+
+                return response;
             }
-
-            var typeToAdd = new UserType
+            catch (Exception ex)
             {
-                TypeName = Request.TypeName,
-            };
+                throw new ApplicationException("An unexpected error occoured while executing add user type command handler", ex);
 
-            await _userTypeRepository.AddUserTypeAsync(typeToAdd);
-
-            var addedRole = await _userTypeRepository.GetUserTypeByNameAsync(typeToAdd.TypeName);
-
-            var response = new UserTypeResponse
-            {
-                Message = "Role added successfully",
-                TypeId = addedRole.Id,
-                TypeName = Request.TypeName
-            };
-
-            return response;
+            }
         }
     }
 }

@@ -26,53 +26,60 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
 
         public async Task<RegisterResponse> Handle(RegisterPractitionerCommand request, CancellationToken cancellationToken)
         {
-            var practitionerDto = request.Practitioner;
-
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(practitionerDto.Password);
-
-            var practitioner = new Practitioner
-            {
-                Id = Guid.NewGuid(),
-                FirstName = practitionerDto.FirstName,
-                LastName = practitionerDto.LastName,
-                Email = practitionerDto.Email,
-                PhoneNumber = practitionerDto.PhoneNumber,
-                IdNumber = practitionerDto.IdNumber,
-                Location = practitionerDto.Location,
-                DateOfBirth = practitionerDto.DateOfBirth,
-                Password = hashedPassword,
-                LicenseNumber = practitionerDto.LicenseNumber,
-               // UserRoles = practitionerDto.UserRoles,
-                CreatedDate = DateTime.UtcNow,
-                UpdatedDate = DateTime.UtcNow
-            };
-
             try
             {
-                await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, practitioner, practitionerDto.UserRoles);
+                var practitionerDto = request.Practitioner;
+
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(practitionerDto.Password);
+
+                var practitioner = new Practitioner
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = practitionerDto.FirstName,
+                    LastName = practitionerDto.LastName,
+                    Email = practitionerDto.Email,
+                    PhoneNumber = practitionerDto.PhoneNumber,
+                    IdNumber = practitionerDto.IdNumber,
+                    Location = practitionerDto.Location,
+                    DateOfBirth = practitionerDto.DateOfBirth,
+                    Password = hashedPassword,
+                    LicenseNumber = practitionerDto.LicenseNumber,
+                    // UserRoles = practitionerDto.UserRoles,
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedDate = DateTime.UtcNow
+                };
+
+                try
+                {
+                    await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, practitioner, practitionerDto.UserRoles);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred while registering practitioner.");
+                    throw; // Propagate the exception to the controller
+                }
+
+                var token = _jwtTokenGenerator.GenerateToken(practitioner);
+
+
+                var response = new RegisterResponse
+                {
+                    FirstName = practitioner.FirstName,
+                    LastName = practitioner.LastName,
+                    Email = practitioner.Email,
+                    PhoneNumber = practitioner.PhoneNumber,
+                    IdNumber = practitioner.IdNumber,
+                    Location = practitioner.Location,
+                    //  UserRoles = practitioner.UserRoles,
+                    Token = token
+                };
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while registering practitioner.");
-                throw; // Propagate the exception to the controller
+                throw new ApplicationException("An unexpected error occoured while executing register practitioner command handler", ex);
             }
-
-            var token = _jwtTokenGenerator.GenerateToken(practitioner);
-
-
-            var response = new RegisterResponse
-            {
-                FirstName = practitioner.FirstName,
-                LastName = practitioner.LastName,
-                Email = practitioner.Email,
-                PhoneNumber = practitioner.PhoneNumber,
-                IdNumber = practitioner.IdNumber,
-                Location = practitioner.Location,
-              //  UserRoles = practitioner.UserRoles,
-                Token = token
-            };
-
-            return response;
         }
     }
 }

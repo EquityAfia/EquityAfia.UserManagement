@@ -10,27 +10,34 @@ namespace EquityAfia.UserManagement.Application.Authentication.Common
     {
         public static async Task AssignRolesToUserAsync(IUserRepository userRepository, IRoleRepository roleRepository, User user, List<string> roleNames)
         {
-            if (roleNames != null && roleNames.Count > 0)
+            try
             {
-                foreach (var roleName in roleNames)
+                if (roleNames != null && roleNames.Count > 0)
                 {
-                    var role = await roleRepository.GetRoleByNameAsync(roleName);
-                    if (role == null)
+                    foreach (var roleName in roleNames)
                     {
-                        throw new Exception($"Role '{roleName}' not found."); 
+                        var role = await roleRepository.GetRoleByNameAsync(roleName);
+                        if (role == null)
+                        {
+                            throw new Exception($"Role '{roleName}' not found.");
+                        }
+
+                        user.UserRoles.Add(new UserRole
+                        {
+                            Id = Guid.NewGuid(),
+                            User = user,
+                            RoleId = role.RoleId,
+                            Role = role
+                        });
                     }
-
-                    user.UserRoles.Add(new UserRole
-                    {
-                        Id = Guid.NewGuid(),
-                        User = user,
-                        RoleId = role.RoleId,
-                        Role = role
-                    });
                 }
-            }
 
-            await userRepository.AddUserAsync(user);
+                await userRepository.AddUserAsync(user);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexcpected error occoured while executing assign role to user", ex);
+            }
         }
     }
 }

@@ -18,30 +18,37 @@ public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, UserRoleRes
 
     public async Task<UserRoleResponse> Handle(AddRoleCommand request, CancellationToken cancellationToken)
     {
-        var role = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
-        if (role != null)
+        try
         {
-            throw new Exception($"Role with the Name '{request.UserRoleRequest.RoleName}' already exists");
+            var role = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
+            if (role != null)
+            {
+                throw new Exception($"Role with the Name '{request.UserRoleRequest.RoleName}' already exists");
+            }
+
+            var roleToAdd = new Role
+            {
+                RoleName = request.UserRoleRequest.RoleName,
+
+            };
+
+            await _roleRepository.AddRoleAsync(roleToAdd);
+            var addedRole = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
+
+            var Id = addedRole.RoleId;
+
+            var roleResponse = new UserRoleResponse
+            {
+                Message = "Role Added Successfully",
+                RoleId = Id,
+                RoleName = roleToAdd.RoleName
+            };
+
+            return roleResponse;
         }
-
-        var roleToAdd = new Role
+        catch (Exception ex)
         {
-            RoleName = request.UserRoleRequest.RoleName, 
-            
-        };
-
-        await _roleRepository.AddRoleAsync(roleToAdd);
-        var addedRole = await _roleRepository.GetRoleByNameAsync(request.UserRoleRequest.RoleName);
-
-        var Id = addedRole.RoleId;
-
-        var roleResponse = new UserRoleResponse
-        {
-            Message = "Role Added Successfully",
-            RoleId = Id,
-            RoleName = roleToAdd.RoleName            
-        };
-
-        return roleResponse;
+            throw new ApplicationException("An unexpected error occoured while executing add role command handler", ex);
+        }
     }
 }

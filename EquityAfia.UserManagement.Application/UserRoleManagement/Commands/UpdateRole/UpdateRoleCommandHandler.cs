@@ -16,20 +16,27 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, UserR
 
     public async Task<UserRoleResponse> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
     {
-        var existingRole = await _roleRepository.GetRoleByIdAsync(request.RoleId);
-        if (existingRole == null)
+        try
         {
-            throw new Exception($"Role with ID '{request.RoleId}' does not exist.");
+            var existingRole = await _roleRepository.GetRoleByIdAsync(request.RoleId);
+            if (existingRole == null)
+            {
+                throw new Exception($"Role with ID '{request.RoleId}' does not exist.");
+            }
+
+            var updatedRole = await _roleRepository.UpdateRoleAsync(request.RoleId, request.NewRoleName);
+
+            var response = new UserRoleResponse
+            {
+                Message = "Role updated successfully",
+                RoleName = updatedRole.RoleName
+            };
+
+            return response;
         }
-
-        var updatedRole = await _roleRepository.UpdateRoleAsync(request.RoleId, request.NewRoleName);
-
-        var response = new UserRoleResponse
+        catch (Exception ex)
         {
-            Message = "Role updated successfully",
-            RoleName = updatedRole.RoleName
-        };
-
-        return response;
+            throw new ApplicationException("An unexcpected error occoured while executing update role command handler", ex);
+        }
     }
 }

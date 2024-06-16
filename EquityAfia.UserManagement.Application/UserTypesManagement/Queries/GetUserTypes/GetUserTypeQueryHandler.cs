@@ -21,13 +21,21 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Queries.GetU
 
         public async Task<List<UserType>> Handle(GetUserTypeQuery request, CancellationToken cancellationToken)
         {
-            var userTypes = await _userTypeRepository.GetAllUserTypesAsync();
-            if (userTypes == null)
+            try
             {
-                throw new Exception("The list is emply");
-            }
+                var userTypes = await _userTypeRepository.GetAllUserTypesAsync();
+                if (userTypes == null)
+                {
+                    throw new Exception("The list is emply");
+                }
 
-            return userTypes;
+                return userTypes;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occoured while executing get user type command handler", ex);
+
+            }
         }
     }
 }

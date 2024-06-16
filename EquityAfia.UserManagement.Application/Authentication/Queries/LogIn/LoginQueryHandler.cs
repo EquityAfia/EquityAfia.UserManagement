@@ -20,32 +20,39 @@ namespace EquityAfia.UserManagement.Application.Authentication.Queries.LogIn
 
         public async Task<LoginResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var loginRequest = request.LoginRequest;
-
-            // Asynchronously fetch the user by email
-            var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
-            if (user == null)
+            try
             {
-                throw new UnauthorizedAccessException("User not found");
+                var loginRequest = request.LoginRequest;
+
+                // Asynchronously fetch the user by email
+                var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
+                if (user == null)
+                {
+                    throw new UnauthorizedAccessException("User not found");
+                }
+
+                // Verify the password using BCrypt
+                var isPasswordValid = BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.Password);
+                if (!isPasswordValid)
+                {
+                    throw new UnauthorizedAccessException("Wrong Password");
+                }
+
+                // Generate JWT token
+                var token = _jwtTokenGenerator.GenerateToken(user);
+
+                // Return authentication response
+                return new LoginResponse
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Token = token
+                };
             }
-
-            // Verify the password using BCrypt
-            var isPasswordValid = BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.Password);
-            if (!isPasswordValid)
+            catch (Exception ex)
             {
-                throw new UnauthorizedAccessException("Wrong Password");
+                throw new ApplicationException("An unexcpected error occoured while executing log in command handler", ex);
             }
-
-            // Generate JWT token
-            var token = _jwtTokenGenerator.GenerateToken(user);
-
-            // Return authentication response
-            return new LoginResponse
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = token
-            };
         }
     }
 }

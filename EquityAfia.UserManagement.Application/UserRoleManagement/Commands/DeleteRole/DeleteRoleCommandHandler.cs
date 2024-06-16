@@ -20,20 +20,26 @@ public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, UserR
 
     public async Task<UserRoleResponse> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
     {
-        
-        var role = await _roleRepository.GetRoleByIdAsync(request.RoleId);
-        if (role == null)
+        try
         {
-            throw new Exception($"Role with Id '{request.RoleId}' does not exist");
+            var role = await _roleRepository.GetRoleByIdAsync(request.RoleId);
+            if (role == null)
+            {
+                throw new Exception($"Role with Id '{request.RoleId}' does not exist");
+            }
+
+            await _roleRepository.DeleteRoleAsync(request.RoleId);
+
+            var response = new UserRoleResponse
+            {
+                Message = "Role has been deleted successfully"
+            };
+
+            return response;
         }
-
-        await _roleRepository.DeleteRoleAsync(request.RoleId);
-
-        var response = new UserRoleResponse
+        catch (Exception ex)
         {
-            Message = "Role has been deleted successfully"
-        };
-
-        return response;
+            throw new ApplicationException("An unexcpected error occoured while executing delete role command handler", ex);
+        }
     }
 }
