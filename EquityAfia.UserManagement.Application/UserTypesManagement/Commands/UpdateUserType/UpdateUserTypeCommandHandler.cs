@@ -4,10 +4,10 @@ using MediatR;
 
 namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.UpdateUserType
 {
-    public class UpdateUserTypeCommandHanddler : IRequestHandler<UpdateUserTypeCommand, UserTypeResponse>
+    public class UpdateUserTypeCommandHandler : IRequestHandler<UpdateUserTypeCommand, UserTypeResponse>
     {
         private readonly IUserTypeRepository _userTypeRepository;
-        public UpdateUserTypeCommandHanddler(IUserTypeRepository userTypeRepository)
+        public UpdateUserTypeCommandHandler(IUserTypeRepository userTypeRepository)
         {
             _userTypeRepository = userTypeRepository;
         }
