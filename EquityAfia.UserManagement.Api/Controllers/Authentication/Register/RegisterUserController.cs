@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EquityAfia.UserManagement.Api.Controllers.Authentication.Register
 {
     [ApiController]
-    [Route("api")]
+    [Route("auth")]
     public class RegisterUserController : ControllerBase
     {
         private readonly IMediator _mediator;

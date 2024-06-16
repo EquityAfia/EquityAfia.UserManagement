@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EquityAfia.UserManagement.Api.Controllers.Authentication.Login
 {
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("/[Controller]")]
     public class LoginController : ControllerBase
     {
         private readonly IMapper _mapper;

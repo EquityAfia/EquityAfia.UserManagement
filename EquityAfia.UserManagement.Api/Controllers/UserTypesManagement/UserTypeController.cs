@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using EquityAfia.UserManagement.Application.UserTypesManagement.Commands.AddUserType;
+using EquityAfia.UserManagement.Application.UserTypesManagement.Commands.DeleteUserType;
+using EquityAfia.UserManagement.Application.UserTypesManagement.Commands.UpdateUserType;
 using EquityAfia.UserManagement.Application.UserTypesManagement.Queries.GetUserTypes;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
 using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
@@ -36,6 +38,28 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
             var command = new AddUserTypeCommand(userTypeRequest);
 
             var response = await _mediator.Send(command);
+            var mappedResponse = _mapper.Map<UserTypeResponse>(response);
+
+            return Ok(mappedResponse);
+        }
+
+        [HttpPut("update-type/{typeId}")]
+        public async Task<IActionResult> UpdateUserType(int typeId, UserTypeRequest typeRequest)
+        {
+            var command = new UpdateUserTypeCommand(typeRequest,typeId);
+
+            var response = await _mediator.Send(command);
+            var mappoedResponse = _mapper.Map<UserTypeResponse>(response);
+
+            return Ok(mappoedResponse);
+        }
+
+        [HttpDelete("delete-usertype/{typeId}")]
+        public async Task<IActionResult> DeleteUserType (int typeId)
+        {
+            var command = new DeleteUserTypeCommand(typeId);
+            var response = await _mediator.Send(command);
+
             var mappedResponse = _mapper.Map<UserTypeResponse>(response);
 
             return Ok(mappedResponse);

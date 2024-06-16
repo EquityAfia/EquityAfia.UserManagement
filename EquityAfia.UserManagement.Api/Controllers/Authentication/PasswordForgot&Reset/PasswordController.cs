@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EquityAfia.UserManagement.Api.Controllers.Authentication.ForgotPassword;
 
 [ApiController]
-[Route("api")]
+[Route("auth")]
 public class PasswordController : ControllerBase
 {
     private readonly IMapper _mapper;
