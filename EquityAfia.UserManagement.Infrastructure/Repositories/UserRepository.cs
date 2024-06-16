@@ -22,53 +22,102 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            try
+            {
+                return await _context.Users.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting all users", ex);
+            }
         }
 
         public async Task<User> GetUserByEmailOrIdNumberAsync(string email, string idNumber)
         {
-            // Example method to get user by either email or ID number
-            return await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email || u.IdNumber == idNumber);
+            try
+            {
+                return await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == email || u.IdNumber == idNumber);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting user by email or email", ex);
+            }
         }
 
         public async Task<User> GetUserByIdAsync(string idNumber)
         {
-            return await _context.Users
-                .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.IdNumber == idNumber);
+            try
+            {
+                return await _context.Users
+                    .Include(u => u.UserRoles)
+                        .ThenInclude(ur => ur.Role)
+                    .FirstOrDefaultAsync(u => u.IdNumber == idNumber);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting user by Id Number", ex);
+            }
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _context.Users
-                .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.Email == email);
+            try
+            {
+                return await _context.Users
+                    .Include(u => u.UserRoles)
+                        .ThenInclude(ur => ur.Role)
+                    .FirstOrDefaultAsync(u => u.Email == email);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting user by email", ex);
+            }
         }
 
         public async Task AddUserAsync(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while adding a user", ex);
+            }
         }
 
         public async Task<User> UpdateUserAsync(User user)
         {
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
-            return user;
+            try
+            {
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while updating a user", ex);
+            }
         }
 
         public async Task DeleteUserAsync(string idNumber, string email)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email || u.IdNumber == idNumber);
-            if (user != null)
+            try
             {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == email || u.IdNumber == idNumber);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while deleting a user", ex);
             }
         }
     }

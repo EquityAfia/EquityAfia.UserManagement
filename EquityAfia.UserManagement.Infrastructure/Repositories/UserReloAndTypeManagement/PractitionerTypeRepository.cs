@@ -24,58 +24,92 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
 
         public async Task<List<PractitionerTypeRequest>> GetAllPractitionerTypesAsync()
         {
-            var practitionerTypes = await _dbContext.PractitionerTypes
-                .Select(pt => _mapper.Map<PractitionerTypeRequest>(pt))
-                .ToListAsync();
+            try
+            {
+                var practitionerTypes = await _dbContext.PractitionerTypes
+                    .Select(pt => _mapper.Map<PractitionerTypeRequest>(pt))
+                    .ToListAsync();
 
-            return practitionerTypes;
+                return practitionerTypes;
+            }catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting all practitioner types", ex);
+            }
         }
 
         public async Task<PractitionerTypeRequest> GetPractitionerTypeByIdAsync(Guid practitionerTypeId)
         {
-            var practitionerType = await _dbContext.PractitionerTypes
-                .Where(pt => pt.Id == practitionerTypeId)
-                .FirstOrDefaultAsync();
+            try
+            {
+                var practitionerType = await _dbContext.PractitionerTypes
+                    .Where(pt => pt.Id == practitionerTypeId)
+                    .FirstOrDefaultAsync();
 
-            return _mapper.Map<PractitionerTypeRequest>(practitionerType);
+                return _mapper.Map<PractitionerTypeRequest>(practitionerType);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting practitioner type by Id", ex);
+            }
         }
 
         public async Task<Guid> AddPractitionerTypeAsync(PractitionerTypeRequest practitionerTypeDto)
         {
-            var practitionerType = _mapper.Map<PractitionerType>(practitionerTypeDto);
+            try
+            {
+                var practitionerType = _mapper.Map<PractitionerType>(practitionerTypeDto);
 
-            _dbContext.PractitionerTypes.Add(practitionerType);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.PractitionerTypes.Add(practitionerType);
+                await _dbContext.SaveChangesAsync();
 
-            return practitionerType.Id;
+                return practitionerType.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while adding a practitioner type", ex);
+            }
         }
 
         public async Task<bool> UpdatePractitionerTypeAsync(Guid practitionerTypeId, PractitionerTypeRequest practitionerTypeDto)
         {
-            var existingPractitionerType = await _dbContext.PractitionerTypes.FindAsync(practitionerTypeId);
+            try
+            {
+                var existingPractitionerType = await _dbContext.PractitionerTypes.FindAsync(practitionerTypeId);
 
-            if (existingPractitionerType == null)
-                return false;
+                if (existingPractitionerType == null)
+                    return false;
 
-            existingPractitionerType.TypeName = practitionerTypeDto.TypeName;
+                existingPractitionerType.TypeName = practitionerTypeDto.TypeName;
 
-            _dbContext.PractitionerTypes.Update(existingPractitionerType);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.PractitionerTypes.Update(existingPractitionerType);
+                await _dbContext.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while updating practitioner type", ex);
+            }
         }
 
         public async Task<bool> DeletePractitionerTypeAsync(Guid practitionerTypeId)
         {
-            var practitionerType = await _dbContext.PractitionerTypes.FindAsync(practitionerTypeId);
+            try
+            {
+                var practitionerType = await _dbContext.PractitionerTypes.FindAsync(practitionerTypeId);
 
-            if (practitionerType == null)
-                return false;
+                if (practitionerType == null)
+                    return false;
 
-            _dbContext.PractitionerTypes.Remove(practitionerType);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.PractitionerTypes.Remove(practitionerType);
+                await _dbContext.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while deleting practitioner type", ex);
+            }
         }
     }
 }
