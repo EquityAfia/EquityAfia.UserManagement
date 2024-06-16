@@ -35,6 +35,14 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             return userType;
         }
 
+        public async Task<UserType> GetUserTypeByIdAsync(int id)
+        {
+           var userType = await _dbContext.UserTypes
+                .FirstOrDefaultAsync(ut => ut.Id == id);
+
+            return userType;
+        }
+
         public async Task<int> AddUserTypeAsync(UserType userType)
         {
             await _dbContext.UserTypes.AddAsync(userType);
@@ -70,5 +78,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
 
             return true;
         }
+
+       
     }
 }

@@ -9,6 +9,7 @@ namespace EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeReposi
     {
         Task<List<UserType>> GetAllUserTypesAsync();
         Task<UserType> GetUserTypeByNameAsync(string userTypeName);
+        Task<UserType> GetUserTypeByIdAsync(int id);
         Task<int> AddUserTypeAsync(UserType userType);
         Task<bool> UpdateUserTypeAsync(int userTypeId, UserTypeRequest userTypeDto);
         Task<bool> DeleteUserTypeAsync(int userTypeId);

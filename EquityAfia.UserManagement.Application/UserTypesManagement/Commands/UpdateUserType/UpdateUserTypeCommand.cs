@@ -1,4 +1,7 @@
-﻿using System;
+﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,16 @@ using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.UpdateUserType
 {
-    public class UpdateUserTypeCommand
+    public class UpdateUserTypeCommand : IRequest<UserTypeResponse>
     {
+        public UserTypeRequest TypeRequest { get; set; }
+        public int TypeId { get; set; }
+
+        public UpdateUserTypeCommand(UserTypeRequest userTypeRequest, int typeId)
+        {
+            TypeRequest = userTypeRequest;
+            TypeId = typeId;
+
+        }
     }
 }
