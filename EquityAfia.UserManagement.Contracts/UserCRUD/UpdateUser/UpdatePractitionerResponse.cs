@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser
 {
-    public class UpdateUserResponse
+    public class UpdatePractitionerResponse
     {
         public string Message { get; set; }
         public string FirstName { get; set; }
