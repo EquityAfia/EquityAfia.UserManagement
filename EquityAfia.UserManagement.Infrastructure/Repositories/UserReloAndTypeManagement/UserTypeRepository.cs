@@ -20,63 +20,105 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
 
         public async Task<List<UserType>> GetAllUserTypesAsync()
         {
-            var userTypes = await _dbContext.UserTypes
-                .ToListAsync();
+            try
+            {
+                var userTypes = await _dbContext.UserTypes
+                    .ToListAsync();
 
-            return userTypes;
+                return userTypes;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred when getting ass user types", ex);
+            }
         }
 
         public async Task<UserType> GetUserTypeByNameAsync(string userTypeName)
         {
-            var userType = await _dbContext.UserTypes
-                .Where(ut => ut.TypeName == userTypeName)
-                .FirstOrDefaultAsync();
+            try
+            {
+                var userType = await _dbContext.UserTypes
+                    .Where(ut => ut.TypeName == userTypeName)
+                    .FirstOrDefaultAsync();
 
-            return userType;
+                return userType;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting user type by name", ex);
+            }
         }
 
         public async Task<UserType> GetUserTypeByIdAsync(int id)
         {
-           var userType = await _dbContext.UserTypes
-                .FirstOrDefaultAsync(ut => ut.Id == id);
+            try
+            {
+                var userType = await _dbContext.UserTypes
+                     .FirstOrDefaultAsync(ut => ut.Id == id);
 
-            return userType;
+                return userType;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting user type by Id", ex);
+            }
         }
 
         public async Task<int> AddUserTypeAsync(UserType userType)
         {
-            await _dbContext.UserTypes.AddAsync(userType);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.UserTypes.AddAsync(userType);
+                await _dbContext.SaveChangesAsync();
 
-            return userType.Id;
+                return userType.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while adding a user type", ex);
+            }
         }
 
         public async Task<bool> UpdateUserTypeAsync(int userTypeId, UserTypeRequest userTypeDto)
         {
-            var existingUserType = await _dbContext.UserTypes.FindAsync(userTypeId);
+            try
+            {
+                var existingUserType = await _dbContext.UserTypes.FindAsync(userTypeId);
 
-            if (existingUserType == null)
-                return false;
+                if (existingUserType == null)
+                    return false;
 
-            existingUserType.TypeName = userTypeDto.TypeName;
+                existingUserType.TypeName = userTypeDto.TypeName;
 
-            _dbContext.UserTypes.Update(existingUserType);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.UserTypes.Update(existingUserType);
+                await _dbContext.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while updating user type", ex);
+            }
         }
 
         public async Task<bool> DeleteUserTypeAsync(int userTypeId)
         {
-            var userType = await _dbContext.UserTypes.FindAsync(userTypeId);
+            try
+            {
+                var userType = await _dbContext.UserTypes.FindAsync(userTypeId);
 
-            if (userType == null)
-                return false;
+                if (userType == null)
+                    return false;
 
-            _dbContext.UserTypes.Remove(userType);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.UserTypes.Remove(userType);
+                await _dbContext.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while deleting user type", ex);
+            }
         }
 
        

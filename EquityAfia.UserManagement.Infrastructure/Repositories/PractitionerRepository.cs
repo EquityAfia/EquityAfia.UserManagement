@@ -18,15 +18,29 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
 
         public async Task<Practitioner> GetPractitionerByIdAsync(Guid id)
         {
-            return await _context.Practitioners
-                .Include(p => p.PractitionerTypes) 
-                .FirstOrDefaultAsync(p => p.Id == id);
+            try
+            {
+                return await _context.Practitioners
+                    .Include(p => p.PractitionerTypes)
+                    .FirstOrDefaultAsync(p => p.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while getting practitioner by Id", ex);
+            }
         }
 
         public async Task UpdatePractitionerAsync(Practitioner practitioner)
         {
-            _context.Practitioners.Update(practitioner);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Practitioners.Update(practitioner);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurrednwhile updating practitioner", ex);
+            }
         }
     }
 }
