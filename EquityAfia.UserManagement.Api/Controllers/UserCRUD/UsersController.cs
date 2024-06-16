@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using EquityAfia.UserManagement.Application.UserCRUD.Commands.DeleteUser;
 using EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers;
 using EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser;
+using EquityAfia.UserManagement.Contracts.UserCRUD.DeleteUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
 using MediatR;
@@ -56,6 +58,16 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             var response = await _mediator.Send(command);
 
             var mappedResponse = _mapper.Map<UpdateUserResponse>(response); 
+            return Ok(mappedResponse);
+        }
+
+        [HttpDelete("delete-user")]
+        public async Task<IActionResult> DeleteUser(string? IdNumber, string? Email)
+        {
+            var command = new DeleteUserCommand();
+            var response = await _mediator.Send(command);
+
+            var mappedResponse = _mapper.Map<DeleteUserResponse>(response);
             return Ok(mappedResponse);
         }
     }

@@ -13,6 +13,6 @@ namespace EquityAfia.UserManagement.Application.Interfaces
         Task<User> GetUserByEmailAsync(string email);
         Task AddUserAsync(User user);
         Task<User> UpdateUserAsync(User user);
-        Task DeleteUserAsync(Guid userId);
+        Task DeleteUserAsync(string idNumber, string email);
     }
 }

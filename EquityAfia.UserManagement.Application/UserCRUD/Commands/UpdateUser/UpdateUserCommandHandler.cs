@@ -21,7 +21,7 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
         public async Task<UpdateUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             // Fetch the user by email or ID number
-            var user = await _userRepository.GetUserByEmailOrIdNumberAsync(request.IdNumber, request.Email);
+            var user = await _userRepository.GetUserByEmailOrIdNumberAsync(request.Email, request.IdNumber);
             if (user == null)
             {
                 throw new Exception("User not found!!");

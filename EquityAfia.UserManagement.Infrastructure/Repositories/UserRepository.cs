@@ -61,9 +61,10 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             return user;
         }
 
-        public async Task DeleteUserAsync(Guid userId)
+        public async Task DeleteUserAsync(string idNumber, string email)
         {
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email || u.IdNumber == idNumber);
             if (user != null)
             {
                 _context.Users.Remove(user);

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Contracts.UserCRUD.DeleteUser
 {
-    internal class DeleteUserResponse
+    public class DeleteUserResponse
     {
+        public string Message { get; set; }
+        public string? IdNumber { get; set; }
+        public string? Email { get; set; }
     }
 }
