@@ -9,11 +9,9 @@ namespace EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesE
         [Key]
         public Guid Id { get; set; }
 
-        // Foreign key for Practitioner/User
         public Guid PractitionerId { get; set; }
         public Practitioner Practitioner { get; set; }
 
-        // Foreign key for UserType
         public Guid TypeId { get; set; }
         public UserType Type { get; set; }
 

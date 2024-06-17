@@ -10,7 +10,7 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword
     public class ForgotPasswordRequest
     {
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Please input a validemail address")]
+        [EmailAddress(ErrorMessage = "Please input a valid email address")]
         public string Email { get; set; }
     }
 }
