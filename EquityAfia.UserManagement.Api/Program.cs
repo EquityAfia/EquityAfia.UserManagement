@@ -142,6 +142,5 @@ void ConfigureLogging(WebApplicationBuilder builder)
     {
         loggingBuilder.ClearProviders(); // Clear the default logging providers
         loggingBuilder.AddConsole();
-        // Add other logging providers if needed
     });
 }

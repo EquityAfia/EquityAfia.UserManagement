@@ -13,7 +13,7 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Please input a validemail address")]
+        [EmailAddress(ErrorMessage = "Please input a valid email address")]
         public string Email { get; set; }
 
         [Required(ErrorMessage ="Phone Number is Required")]
