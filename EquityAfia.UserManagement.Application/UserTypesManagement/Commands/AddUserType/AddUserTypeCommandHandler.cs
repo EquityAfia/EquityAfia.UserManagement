@@ -38,12 +38,12 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.Add
 
                 await _userTypeRepository.AddUserTypeAsync(typeToAdd);
 
-                var addedRole = await _userTypeRepository.GetUserTypeByNameAsync(typeToAdd.TypeName);
+                var addedType = await _userTypeRepository.GetUserTypeByNameAsync(typeToAdd.TypeName);
 
                 var response = new UserTypeResponse
                 {
-                    Message = "Role added successfully",
-                    TypeId = addedRole.Id,
+                    Message = "User type added successfully",
+                    TypeId = addedType.Id,
                     TypeName = Request.TypeName
                 };
 

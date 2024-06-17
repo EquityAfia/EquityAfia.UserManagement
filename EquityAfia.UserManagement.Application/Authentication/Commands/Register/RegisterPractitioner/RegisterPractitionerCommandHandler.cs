@@ -1,11 +1,11 @@
-﻿
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using EquityAfia.UserManagement.Application.Authentication.Common;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using MediatR;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
+using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner
 {
@@ -16,25 +16,28 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
         private readonly ILogger<RegisterPractitionerCommandHandler> _logger;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public RegisterPractitionerCommandHandler(IUserRepository userRepository, IRoleRepository roleRepository, ILogger<RegisterPractitionerCommandHandler> logger, IJwtTokenGenerator jwtTokenGenerator)
+        public RegisterPractitionerCommandHandler(
+            IUserRepository userRepository,
+            IRoleRepository roleRepository,
+            ILogger<RegisterPractitionerCommandHandler> logger,
+            IJwtTokenGenerator jwtTokenGenerator)
         {
-            _userRepository = userRepository;
-            _roleRepository = roleRepository;
-            _logger = logger;
-            _jwtTokenGenerator = jwtTokenGenerator;
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _roleRepository = roleRepository ?? throw new ArgumentNullException(nameof(roleRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _jwtTokenGenerator = jwtTokenGenerator ?? throw new ArgumentNullException(nameof(jwtTokenGenerator));
         }
 
         public async Task<RegisterResponse> Handle(RegisterPractitionerCommand request, CancellationToken cancellationToken)
         {
+            var practitionerDto = request.Practitioner;
+
             try
             {
-                var practitionerDto = request.Practitioner;
-
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(practitionerDto.Password);
 
                 var practitioner = new Practitioner
                 {
-                    Id = Guid.NewGuid(),
                     FirstName = practitionerDto.FirstName,
                     LastName = practitionerDto.LastName,
                     Email = practitionerDto.Email,
@@ -44,7 +47,6 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     DateOfBirth = practitionerDto.DateOfBirth,
                     Password = hashedPassword,
                     LicenseNumber = practitionerDto.LicenseNumber,
-                    // UserRoles = practitionerDto.UserRoles,
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };
@@ -55,12 +57,13 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "An error occurred while registering practitioner.");
-                    throw; // Propagate the exception to the controller
+                    throw new ApplicationException("Error assigning roles to practitioner", ex);
                 }
 
-                var token = _jwtTokenGenerator.GenerateToken(practitioner);
+                // Save practitioner to the database
+                await _userRepository.AddUserAsync(practitioner);
 
+                var token = _jwtTokenGenerator.GenerateToken(practitioner);
 
                 var response = new RegisterResponse
                 {
@@ -70,15 +73,16 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     PhoneNumber = practitioner.PhoneNumber,
                     IdNumber = practitioner.IdNumber,
                     Location = practitioner.Location,
-                    //  UserRoles = practitioner.UserRoles,
-                    Token = token
+                    LicenseNumber = practitioner.LicenseNumber,
+                    UserRoles = practitioner.UserRoles.Select(ur => ur.Role.ToString()).ToList(),
+                    PractitionerType = practitioner.PractitionerTypes.ToList()
                 };
 
                 return response;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occoured while executing register practitioner command handler", ex);
+                throw new ApplicationException("An unexpected error occurred while registering the practitioner", ex);
             }
         }
     }

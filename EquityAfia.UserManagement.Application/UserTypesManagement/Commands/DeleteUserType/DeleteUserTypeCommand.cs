@@ -10,8 +10,8 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.Del
 {
     public class DeleteUserTypeCommand : IRequest<UserTypeResponse>
     {
-        public int TypeId { get; set; }
-        public DeleteUserTypeCommand(int typeId)
+        public Guid TypeId { get; set; }
+        public DeleteUserTypeCommand(Guid typeId)
         {
             TypeId = typeId;
         }

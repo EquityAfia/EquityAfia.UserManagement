@@ -14,6 +14,5 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
         public string? LicenseNumber { get; set; }
         public List<string> UserRoles { get; set; }
         public List<PractitionerType>? PractitionerType { get; set; }
-        public string Token { get; set; }
     }
 }

@@ -32,6 +32,5 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
         [Required(ErrorMessage ="Password is required")]
         public string Password { get; set; }
         public List<string> UserRoles { get; set; }
-        public string PractitionerType { get; set; }
     }
 }

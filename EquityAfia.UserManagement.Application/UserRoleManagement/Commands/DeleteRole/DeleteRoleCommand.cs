@@ -10,8 +10,8 @@ namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.Dele
 
 public class DeleteRoleCommand : IRequest<UserRoleResponse>
 {
-    public int RoleId { get; set; }
-    public DeleteRoleCommand(int roleId)
+    public Guid RoleId { get; set; }
+    public DeleteRoleCommand(Guid roleId)
     {
         RoleId = roleId;
     }

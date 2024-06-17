@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
 {
     [ApiController]
-    [Route("api")]
+    [Route("Users")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;

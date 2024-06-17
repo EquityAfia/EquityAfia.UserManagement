@@ -6,7 +6,7 @@ namespace EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesE
 public class UserType
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     public string TypeName { get; set; }

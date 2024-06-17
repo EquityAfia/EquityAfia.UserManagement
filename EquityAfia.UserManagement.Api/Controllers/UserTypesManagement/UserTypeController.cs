@@ -58,7 +58,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
         }
 
         [HttpPut("update-type/{typeId}")]
-        public async Task<IActionResult> UpdateUserType(int typeId, UserTypeRequest typeRequest)
+        public async Task<IActionResult> UpdateUserType(Guid typeId, UserTypeRequest typeRequest)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
         }
 
         [HttpDelete("delete-usertype/{typeId}")]
-        public async Task<IActionResult> DeleteUserType (int typeId)
+        public async Task<IActionResult> DeleteUserType (Guid typeId)
         {
             try
             {

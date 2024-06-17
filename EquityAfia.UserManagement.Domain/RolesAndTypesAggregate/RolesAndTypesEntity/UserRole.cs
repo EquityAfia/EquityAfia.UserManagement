@@ -7,9 +7,9 @@ namespace EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesE
 public class UserRole
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
     public User User { get; set; }
 
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
     public Role Role { get; set; }
 }

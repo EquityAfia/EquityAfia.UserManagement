@@ -61,8 +61,8 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             }
         }
 
-        [HttpPut("update-roles/{roleId}")]
-        public async Task<IActionResult> UpdateRoles(int roleId, [FromBody] UserRoleRequest userRoleRequest)
+        [HttpPut("update-roles")]
+        public async Task<IActionResult> UpdateRoles([FromQuery]Guid roleId, [FromBody] UserRoleRequest userRoleRequest)
         {
             try
             {
@@ -78,8 +78,8 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             }
         }
 
-        [HttpDelete("delete-roles/{roleId}")]
-        public async Task<IActionResult> DeleteRole(int roleId)
+        [HttpDelete("delete-role")]
+        public async Task<IActionResult> DeleteRole([FromQuery]Guid roleId)
         {
             try
             {
