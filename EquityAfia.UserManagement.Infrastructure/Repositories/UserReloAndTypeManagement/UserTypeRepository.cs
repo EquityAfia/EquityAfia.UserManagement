@@ -49,7 +49,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
         }
 
-        public async Task<UserType> GetUserTypeByIdAsync(int id)
+        public async Task<UserType> GetUserTypeByIdAsync(Guid id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
         }
 
-        public async Task<int> AddUserTypeAsync(UserType userType)
+        public async Task<Guid> AddUserTypeAsync(UserType userType)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
         }
 
-        public async Task<bool> UpdateUserTypeAsync(int userTypeId, UserTypeRequest userTypeDto)
+        public async Task<bool> UpdateUserTypeAsync(Guid userTypeId, UserTypeRequest userTypeDto)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
         }
 
-        public async Task<bool> DeleteUserTypeAsync(int userTypeId)
+        public async Task<bool> DeleteUserTypeAsync(Guid userTypeId)
         {
             try
             {
@@ -120,7 +120,5 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
                 throw new ApplicationException("An unexpected error occurred while deleting user type", ex);
             }
         }
-
-       
     }
 }

@@ -7,14 +7,14 @@ namespace EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesE
     public class PractitionerType
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
         // Foreign key for Practitioner/User
         public Guid PractitionerId { get; set; }
         public Practitioner Practitioner { get; set; }
 
         // Foreign key for UserType
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
         public UserType Type { get; set; }
 
         [Required]

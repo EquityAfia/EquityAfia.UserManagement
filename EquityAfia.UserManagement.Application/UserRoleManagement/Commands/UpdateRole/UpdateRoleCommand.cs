@@ -5,10 +5,10 @@ namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.Upda
 
 public class UpdateRoleCommand : IRequest<UserRoleResponse>
 {
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
     public string NewRoleName { get; set; }
 
-    public UpdateRoleCommand(int roleId, string newRoleName)
+    public UpdateRoleCommand(Guid roleId, string newRoleName)
     {
         RoleId = roleId;
         NewRoleName = newRoleName;

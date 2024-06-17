@@ -59,13 +59,12 @@ namespace EquityAfia.UserManagement.Infrastructure.Authentication
                 // Create the claims based on user information
                 var claims = new List<Claim>
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
-                    new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("IdNumber", user.IdNumber), 
-                    new Claim(JwtRegisteredClaimNames.Typ, user.UserType), 
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                    new(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                    new(JwtRegisteredClaimNames.Email, user.Email),
+                    new(JwtRegisteredClaimNames.Typ, user.UserType), 
+                    new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
                 if (user.UserRoles != null)

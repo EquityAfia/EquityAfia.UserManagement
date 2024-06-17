@@ -12,9 +12,9 @@ namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.Upd
     public class UpdateUserTypeCommand : IRequest<UserTypeResponse>
     {
         public UserTypeRequest TypeRequest { get; set; }
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
 
-        public UpdateUserTypeCommand(UserTypeRequest userTypeRequest, int typeId)
+        public UpdateUserTypeCommand(UserTypeRequest userTypeRequest, Guid typeId)
         {
             TypeRequest = userTypeRequest;
             TypeId = typeId;

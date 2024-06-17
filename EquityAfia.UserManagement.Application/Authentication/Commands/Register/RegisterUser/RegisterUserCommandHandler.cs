@@ -26,8 +26,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
 
         public async Task<RegisterResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
+            
                 var userDto = request.User;
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
@@ -47,7 +46,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     UpdatedDate = DateTime.UtcNow
                 };
 
-                var token = _jwtTokenGenerator.GenerateToken(user);
+               // var token = _jwtTokenGenerator.GenerateToken(user);
 
                 await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
 
@@ -60,15 +59,10 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     IdNumber = user.IdNumber,
                     Location = user.Location,
                     UserRoles = userDto.UserRoles,
-                    Token = token
                 };
 
                 return response;
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("An unexpected error occoured while executing register user command handler", ex);
-            }
+            
         }
     }
 }

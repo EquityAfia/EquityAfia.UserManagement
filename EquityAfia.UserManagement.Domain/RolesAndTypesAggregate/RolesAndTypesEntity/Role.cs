@@ -7,7 +7,7 @@ namespace EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesE
 public class Role
 {
     [Key]
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
     [Required]
     public string RoleName { get; set; }

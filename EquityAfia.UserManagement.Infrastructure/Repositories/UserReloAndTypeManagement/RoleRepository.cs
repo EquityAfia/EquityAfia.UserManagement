@@ -28,7 +28,7 @@ public class RoleRepository : IRoleRepository
     }
 
     // Method to fetch a role by its ID
-    public async Task<Role> GetRoleByIdAsync(int roleId)
+    public async Task<Role> GetRoleByIdAsync(Guid roleId)
     {
         try
         {
@@ -55,7 +55,7 @@ public class RoleRepository : IRoleRepository
     }
 
     // Method to add a new role
-    public async Task<int> AddRoleAsync(Role role)
+    public async Task<Guid> AddRoleAsync(Role role)
     {
         try
         {
@@ -70,7 +70,7 @@ public class RoleRepository : IRoleRepository
         }
     }
 
-    public async Task<Role> UpdateRoleAsync(int roleId, string newRoleName)
+    public async Task<Role> UpdateRoleAsync(Guid roleId, string newRoleName)
     {
         try
         {
@@ -94,7 +94,7 @@ public class RoleRepository : IRoleRepository
 
 
     // Method to delete a role by ID
-    public async Task DeleteRoleAsync(int roleId)
+    public async Task DeleteRoleAsync(Guid roleId)
     {
         try
         {
@@ -110,5 +110,4 @@ public class RoleRepository : IRoleRepository
             throw new ApplicationException("An unexpected error occurred while deleting user role", ex);
         }
     }
-
 }

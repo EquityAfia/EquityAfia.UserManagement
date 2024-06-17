@@ -9,6 +9,6 @@ namespace EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType
 public class UserTypeResponse
 {
     public string? Message { get; set; }
-    public int? TypeId { get; set; }
+    public Guid? TypeId { get; set; }
     public string? TypeName { get; set; }
 }

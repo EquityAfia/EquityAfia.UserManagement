@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquityAfia.UserManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240613172233_MoveUserTypeLicenseNumberPractitionerTypeAfterPassword")]
-    partial class MoveUserTypeLicenseNumberPractitionerTypeAfterPassword
+    [Migration("20240617081211_Initial-Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,36 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.Role", b =>
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.PractitionerType", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+                    b.Property<Guid>("PractitionerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PractitionerId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("PractitionerTypes");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.Role", b =>
+                {
+                    b.Property<Guid>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -42,19 +65,34 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.UserRole", b =>
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.UserRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.UserType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserTypes");
                 });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User", b =>
@@ -66,8 +104,9 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -118,6 +157,9 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.Property<string>("ResetToken")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -143,13 +185,29 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PractitionerType")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("Practitioner");
                 });
 
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.UserRole", b =>
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.PractitionerType", b =>
+                {
+                    b.HasOne("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Practitioner", "Practitioner")
+                        .WithMany("PractitionerTypes")
+                        .HasForeignKey("PractitionerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.UserType", "Type")
+                        .WithMany("PractitionerTypes")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Practitioner");
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.UserRole", b =>
                 {
                     b.HasOne("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User", "User")
                         .WithMany("UserRoles")
@@ -157,7 +215,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.Role", "Role")
+                    b.HasOne("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -168,14 +226,24 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAggregate.RolesEntity.Role", b =>
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.Role", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.UserType", b =>
+                {
+                    b.Navigation("PractitionerTypes");
                 });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Practitioner", b =>
+                {
+                    b.Navigation("PractitionerTypes");
                 });
 #pragma warning restore 612, 618
         }
