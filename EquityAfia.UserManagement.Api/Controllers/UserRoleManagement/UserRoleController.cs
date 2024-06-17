@@ -37,7 +37,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing view all user roles controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing view all user roles controller: {ex}");
             }
         }
 
@@ -57,7 +57,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing create user role controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing create user role controller: {ex}");
             }
         }
 
@@ -74,7 +74,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing update user role controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing update user role controller: {ex}");
             }
         }
 
@@ -95,7 +95,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserRoleManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing delete user role controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing delete user role controller: {ex}");
             }
         }
     }

@@ -35,7 +35,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing view all user types controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing view all user types controller: {ex}");
             }
         }
 
@@ -53,7 +53,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing add user type controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing add user type controller: {ex}");
             }
         }
 
@@ -71,7 +71,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing update user type controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing update user type controller: {ex}");
             }
         }
 
@@ -89,7 +89,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserTypesManagement
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing delete user type controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing delete user type controller: {ex}");
             }
         }
     }
