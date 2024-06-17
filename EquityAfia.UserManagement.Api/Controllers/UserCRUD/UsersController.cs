@@ -44,7 +44,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
                 return Ok(mappedResponse);
             }catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing get one user controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing get one user controller: {ex}");
             }
         }
 
@@ -60,7 +60,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing get all users controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing get all users controller: {ex}");
             }
         }
 
@@ -77,7 +77,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing update user controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing update user controller: {ex}");
             }
         }
 
@@ -94,7 +94,7 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing delete user controller: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occoured while executing delete user controller: {ex}");
             }
         }
     }
