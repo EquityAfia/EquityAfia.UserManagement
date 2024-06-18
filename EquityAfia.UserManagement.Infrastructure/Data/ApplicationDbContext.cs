@@ -30,8 +30,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
                 .HasValue<User>("USER")
                 .HasValue<Practitioner>("PRACTITIONER")
                 .HasValue<CHP>("CHP")
-                .HasValue<Patient>("PATIENT")
-                .HasValue<Editor>("EDITOR");
+                .HasValue<Patient>("PATIENT");
 
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => ur.Id);
