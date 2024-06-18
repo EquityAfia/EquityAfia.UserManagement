@@ -1,8 +1,6 @@
 ﻿
 using AutoMapper;
-using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
-using EquityAfia.UserManagement.Contracts.Authentication.RegisterPractitioner;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -44,23 +42,5 @@ namespace EquityAfia.UserManagement.Api.Controllers.Authentication.Register
             }
         }
 
-        [HttpPost("register-practitioner")]
-        public async Task<IActionResult> RegisterPractitioner([FromBody] PractitionerRegistrationRequest practitionerDto)
-        {
-            try
-            {
-
-                var command = new RegisterPractitionerCommand(practitionerDto);
-                var practitionerId = await _mediator.Send(command);
-
-                var mappedResponse = _mapper.Map<RegisterResponse>(practitionerId);
-
-                return Ok(mappedResponse);
-            }catch (Exception ex)
-            {
-                return StatusCode(500, $"An unexpected error occoured while executing register practitioner controller: { ex}");
-            }
-
-        }
     }
 }

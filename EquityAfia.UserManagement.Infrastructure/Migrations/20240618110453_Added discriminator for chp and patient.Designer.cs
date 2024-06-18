@@ -4,6 +4,7 @@ using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquityAfia.UserManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618110453_Added discriminator for chp and patient")]
+    partial class Addeddiscriminatorforchpandpatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,9 +142,6 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LicenseNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -184,13 +184,6 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("CHP");
                 });
 
-            modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Editor", b =>
-                {
-                    b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
-
-                    b.HasDiscriminator().HasValue("Editor");
-                });
-
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Patient", b =>
                 {
                     b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
@@ -201,6 +194,10 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Practitioner", b =>
                 {
                     b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Practitioner");
                 });

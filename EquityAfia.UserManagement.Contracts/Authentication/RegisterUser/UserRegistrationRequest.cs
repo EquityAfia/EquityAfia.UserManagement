@@ -6,6 +6,7 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
 {
     public class UserRegistrationDto
     {
+
         [Required(ErrorMessage ="First name is required")]
         public string FirstName { get; set; }
 
@@ -31,6 +32,11 @@ namespace EquityAfia.UserManagement.Contracts.Authentication.RegisterUser
 
         [Required(ErrorMessage ="Password is required")]
         public string Password { get; set; }
+        public string UserType { get; set; }
+        public string? LicenseNumber { get; set; }
+
         public List<string> UserRoles { get; set; }
+
+
     }
 }

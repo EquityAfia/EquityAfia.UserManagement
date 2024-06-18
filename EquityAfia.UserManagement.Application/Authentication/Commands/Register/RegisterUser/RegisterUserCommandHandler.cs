@@ -41,7 +41,9 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     IdNumber = userDto.IdNumber,
                     Location = userDto.Location,
                     DateOfBirth = userDto.DateOfBirth,
-                    Password = hashedPassword,  // Ensure to hash the password in a real scenario
+                    Password = hashedPassword,
+                    UserType = userDto.UserType,
+                    LicenseNumber = userDto.LicenseNumber,
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
                 };

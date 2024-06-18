@@ -28,6 +28,8 @@ namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
         public string? ResetToken { get; set; }
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public string UserType { get; set; }
+        public string? LicenseNumber { get; set; }
+
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
 
