@@ -1,7 +1,6 @@
 ﻿
 using AutoMapper;
 using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

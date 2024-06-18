@@ -1,5 +1,4 @@
 using EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPassword;
-using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterPractitioner;
 using EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser;
 using EquityAfia.UserManagement.Application.Authentication.Commands.ResetPassword;
 using EquityAfia.UserManagement.Application.Authentication.Queries.LogIn;
@@ -60,7 +59,6 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddAutoMapper(typeof(Program)); // Adjust with appropriate AutoMapper profile or class
 
 // Register command and query handlers
-builder.Services.AddTransient<IRequestHandler<RegisterPractitionerCommand, RegisterResponse>, RegisterPractitionerCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, RegisterResponse>, RegisterUserCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<LoginQuery, LoginResponse>, LoginQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<ForgotPasswordCommand, ForgotPasswordResponse>, ForgotPasswordCommandHandler>();

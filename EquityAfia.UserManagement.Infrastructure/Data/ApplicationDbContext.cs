@@ -12,6 +12,10 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Practitioner> Practitioners { get; set; }
+        public DbSet<CHP> CHPs { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Editor> Editors { get; set; }
+
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<PractitionerType> PractitionerTypes { get; set; }
@@ -23,8 +27,11 @@ namespace EquityAfia.UserManagement.Infrastructure.Data
 
             modelBuilder.Entity<User>()
                 .HasDiscriminator<string>("UserType")
-                .HasValue<User>("User")
-                .HasValue<Practitioner>("Practitioner");
+                .HasValue<User>("USER")
+                .HasValue<Practitioner>("PRACTITIONER")
+                .HasValue<CHP>("CHP")
+                .HasValue<Patient>("PATIENT")
+                .HasValue<Editor>("EDITOR");
 
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => ur.Id);
