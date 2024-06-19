@@ -69,7 +69,12 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
         {
             try
             {
-                var command = new UpdateUserCommand(updateUserRequest);
+                var command = new UpdateUserCommand(updateUserRequest)
+                {
+                    IdNumber = idNumber,
+                    Email = email
+                };
+
                 var response = await _mediator.Send(command);
 
                 var mappedResponse = _mapper.Map<UpdateUserResponse>(response);
@@ -77,16 +82,21 @@ namespace EquityAfia.UserManagement.Api.Controllers.UserCRUD
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An unexpected error occoured while executing update user controller: {ex}");
+                return StatusCode(500, $"An unexpected error occurred while executing update user controller: {ex}");
             }
         }
 
+
         [HttpDelete("delete-user")]
-        public async Task<IActionResult> DeleteUser(string? IdNumber, string? Email)
+        public async Task<IActionResult> DeleteUser(string? idNumber, string? email)
         {
             try
             {
-                var command = new DeleteUserCommand();
+                var command = new DeleteUserCommand()
+                {
+                    IdNumber = idNumber,
+                    Email = email
+                }; ;
                 var response = await _mediator.Send(command);
 
                 var mappedResponse = _mapper.Map<DeleteUserResponse>(response);

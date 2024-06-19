@@ -1,12 +1,6 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
-using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
 {
@@ -22,7 +16,9 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
         {
             try
             {
+                // Handle cases where idNumber or email might be null or empty
                 var user = await _userRepository.GetUserByEmailOrIdNumberAsync(request.Email, request.IdNumber);
+
                 if (user == null)
                 {
                     throw new Exception("User not found!!");
@@ -32,10 +28,10 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
                 user.UpdateUserInfo(
                     request.UpdateUserRequest.FirstName,
                     request.UpdateUserRequest.LastName,
-                    user.Email,
+                    user.Email, // Ensure to keep the original email
                     request.UpdateUserRequest.PhoneNumber,
                     request.UpdateUserRequest.Location,
-                    user.DateOfBirth
+                    user.DateOfBirth // Ensure to keep the original date of birth
                 );
 
                 await _userRepository.UpdateUserAsync(user);
@@ -53,8 +49,9 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occoured while executing update user command handler", ex);
+                throw new ApplicationException("An unexpected error occurred while executing update user command handler", ex);
             }
         }
+
     }
 }
