@@ -26,7 +26,10 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.DeleteUser
                     throw new Exception("User not found!!");
                 }
 
-                await _userRepository.DeleteUserAsync(request.Email, request.IdNumber);
+               // await _userRepository.DeleteUserAsync(request.Email, request.IdNumber);
+
+               user.IsDeleted = true;
+               await _userRepository.UpdateUserAsync(user);
 
                 var response = new DeleteUserResponse
                 {

@@ -26,7 +26,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Queries.LogIn
 
                 // Asynchronously fetch the user by email
                 var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
-                if (user == null)
+                if (user == null || user != null && user.IsDeleted is true)
                 {
                     throw new UnauthorizedAccessException("User not found");
                 }
