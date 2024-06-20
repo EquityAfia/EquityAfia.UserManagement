@@ -67,6 +67,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
                     .Include(u => u.UserRoles)
                         .ThenInclude(ur => ur.Role)
                     .FirstOrDefaultAsync(u => u.Email == email);
+
             }
             catch (Exception ex)
             {
