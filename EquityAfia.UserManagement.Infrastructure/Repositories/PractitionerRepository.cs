@@ -26,7 +26,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting practitioner by Id", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -39,7 +39,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurrednwhile updating practitioner", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

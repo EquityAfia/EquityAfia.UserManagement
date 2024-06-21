@@ -51,7 +51,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Queries.LogIn
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexcpected error occoured while executing log in command handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

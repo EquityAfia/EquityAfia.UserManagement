@@ -23,7 +23,7 @@ public class RoleRepository : IRoleRepository
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occurred while getting all user roles", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 
@@ -36,7 +36,7 @@ public class RoleRepository : IRoleRepository
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occurred while getting role by Id", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 
@@ -50,7 +50,7 @@ public class RoleRepository : IRoleRepository
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occurred getting user role by name", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 
@@ -66,7 +66,7 @@ public class RoleRepository : IRoleRepository
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occurred while adding a user role", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 
@@ -88,7 +88,7 @@ public class RoleRepository : IRoleRepository
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occurred while updating user role", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 
@@ -107,7 +107,7 @@ public class RoleRepository : IRoleRepository
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occurred while deleting user role", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 }

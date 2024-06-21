@@ -27,7 +27,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting all users", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -40,7 +40,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting user by email or email", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -55,7 +55,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting user by Id Number", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -71,7 +71,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting user by email", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -84,7 +84,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while adding a user", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -99,7 +99,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while updating a user", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -117,7 +117,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while deleting a user", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

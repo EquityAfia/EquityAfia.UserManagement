@@ -48,7 +48,7 @@ public class AddRoleCommandHandler : IRequestHandler<AddRoleCommand, UserRoleRes
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexpected error occoured while executing add role command handler", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 }

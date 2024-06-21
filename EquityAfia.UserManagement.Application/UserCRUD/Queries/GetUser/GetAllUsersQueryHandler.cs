@@ -27,7 +27,7 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetAllUsers
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexcpected error occoured while executing get all users query handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

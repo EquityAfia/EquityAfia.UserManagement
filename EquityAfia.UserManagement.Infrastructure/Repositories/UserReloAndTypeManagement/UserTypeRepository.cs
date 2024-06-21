@@ -29,7 +29,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred when getting ass user types", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -45,7 +45,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting user type by name", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -60,7 +60,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting user type by Id", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -75,7 +75,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while adding a user type", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -97,7 +97,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while updating user type", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -117,7 +117,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while deleting user type", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

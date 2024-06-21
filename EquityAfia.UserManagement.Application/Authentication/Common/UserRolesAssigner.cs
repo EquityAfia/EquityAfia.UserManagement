@@ -36,7 +36,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Common
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexcpected error occoured while executing assign role to user", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

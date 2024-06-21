@@ -49,7 +49,7 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while executing update user command handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 

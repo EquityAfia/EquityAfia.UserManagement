@@ -39,7 +39,7 @@ public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, UserR
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexcpected error occoured while executing delete role command handler", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 }
