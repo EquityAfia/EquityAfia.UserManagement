@@ -45,7 +45,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPa
                 return response;
             } catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occoured while executing forgot password command handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

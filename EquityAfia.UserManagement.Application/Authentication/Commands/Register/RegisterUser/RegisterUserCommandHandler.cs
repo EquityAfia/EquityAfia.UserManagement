@@ -26,7 +26,9 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
 
         public async Task<RegisterResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            
+            try
+            {
+
                 var userDto = request.User;
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
@@ -48,7 +50,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     UpdatedDate = DateTime.UtcNow
                 };
 
-               // var token = _jwtTokenGenerator.GenerateToken(user);
+                // var token = _jwtTokenGenerator.GenerateToken(user);
 
                 await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
 
@@ -64,6 +66,11 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 };
 
                 return response;
+
+            }catch(Exception ex)
+            {
+                throw new ApplicationException(ex.ToString());
+            }
             
         }
     }

@@ -33,7 +33,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
                 return practitionerTypes;
             }catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting all practitioner types", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -49,7 +49,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while getting practitioner type by Id", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -66,7 +66,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while adding a practitioner type", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -88,7 +88,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while updating practitioner type", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
 
@@ -108,7 +108,7 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeM
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occurred while deleting practitioner type", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

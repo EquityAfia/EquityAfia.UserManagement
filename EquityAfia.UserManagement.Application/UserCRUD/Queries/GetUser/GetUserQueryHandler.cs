@@ -46,7 +46,7 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexcpected error occoured while executing get one user command handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

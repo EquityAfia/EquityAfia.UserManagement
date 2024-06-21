@@ -36,7 +36,7 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, UserR
         }
         catch (Exception ex)
         {
-            throw new ApplicationException("An unexcpected error occoured while executing update role command handler", ex);
+            throw new ApplicationException(ex.ToString());
         }
     }
 }

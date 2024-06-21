@@ -28,8 +28,7 @@ namespace EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRo
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occoured while executing get role query handler", ex);
-
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

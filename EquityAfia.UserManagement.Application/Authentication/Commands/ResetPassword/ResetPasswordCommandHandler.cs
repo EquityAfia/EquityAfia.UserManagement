@@ -49,7 +49,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ResetPas
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexcpected error occoured while executing reset password command handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

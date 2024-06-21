@@ -42,7 +42,7 @@ namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.DeleteUser
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An unexpected error occoured while executing delete user command handler", ex);
+                throw new ApplicationException(ex.ToString());
             }
         }
     }
