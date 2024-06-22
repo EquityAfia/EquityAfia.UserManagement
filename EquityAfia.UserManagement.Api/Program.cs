@@ -20,6 +20,7 @@ using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
+using EquityAfia.UserManagement.Contracts.Events;
 using EquityAfia.UserManagement.Contracts.UserCRUD.DeleteUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
@@ -31,31 +32,35 @@ using EquityAfia.UserManagement.Infrastructure.Authentication;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using EquityAfia.UserManagement.Infrastructure.Repositories;
 using EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeManagement;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add logging configuration
+// Configure logging
 ConfigureLogging(builder);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext and configure SQL Server
+// Configure DbContext with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add MediatR for handling commands and queries
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-// Register AutoMapper for mapping DTOs
+// Register AutoMapper
 builder.Services.AddAutoMapper(typeof(Program)); // Adjust with appropriate AutoMapper profile or class
 
 // Register command and query handlers
@@ -64,24 +69,23 @@ builder.Services.AddTransient<IRequestHandler<LoginQuery, LoginResponse>, LoginQ
 builder.Services.AddTransient<IRequestHandler<ForgotPasswordCommand, ForgotPasswordResponse>, ForgotPasswordCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<ResetPasswordCommand, ResetPasswordResponse>, ResetPasswordCommandHandler>();
 
-//Users
+// User operations
 builder.Services.AddTransient<IRequestHandler<GetUserQuery, GetUserResponse>, GetUserQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetAllUsersQuery, List<User>>, GetAllUsersQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateUserCommand, UpdateUserResponse>, UpdateUserCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<DeleteUserCommand, DeleteUserResponse>, DeleteUserCommandHandler>();
 
-
-//User Roles
+// User Roles operations
 builder.Services.AddTransient<IRequestHandler<AddRoleCommand, UserRoleResponse>, AddRoleCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateRoleCommand, UserRoleResponse>, UpdateRoleCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<DeleteRoleCommand, UserRoleResponse>, DeleteRoleCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<GetRoleQuery, List<Role>>, GetRoleQueryHandler>();
 
-//User Types
+// User Types operations
 builder.Services.AddTransient<IRequestHandler<GetUserTypeQuery, List<UserType>>, GetUserTypeQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<AddUserTypeCommand, UserTypeResponse>, AddUserTypeCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateUserTypeCommand, UserTypeResponse>, UpdateUserTypeCommandHandler>();
-builder.Services.AddTransient<IRequestHandler<DeleteUserTypeCommand, UserTypeResponse>,  DeleteUserTypeCommandHandler>();
+builder.Services.AddTransient<IRequestHandler<DeleteUserTypeCommand, UserTypeResponse>, DeleteUserTypeCommandHandler>();
 
 // Register repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -103,34 +107,53 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
-            ValidIssuer = jwtSettings.Issuer, // Set valid issuer if needed
-            ValidateAudience = false,
-            ValidAudience = jwtSettings.Audience, // Set valid audience if needed
-            ValidateIssuerSigningKey = false,
+            ValidateIssuer = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidateAudience = true,
+            ValidAudience = jwtSettings.Audience,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-            ValidateLifetime = false,
+            ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero // Adjust if necessary
         };
     });
+/*
+// MassTransit Kafka configuration
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingKafka((context, k) =>
+    {
+        k.Host("localhost:9092"); // Replace with your Kafka broker address
+
+        k.TopicEndpoint<UserRegistered>("topic-name", e =>
+        {
+            e.Consumer<UserRegisteredConsumer>();
+        });
+    });
+
+    x.AddConsumer<UserRegisteredConsumer>();
+});
+
+
+// Adding MassTransit consumers if any
+builder.Services.AddMassTransitHostedService();
+*/
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
-        // Configure other SwaggerUI options if needed
     });
 }
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
 
 // Configure logging
@@ -138,7 +161,7 @@ void ConfigureLogging(WebApplicationBuilder builder)
 {
     builder.Services.AddLogging(loggingBuilder =>
     {
-        loggingBuilder.ClearProviders(); // Clear the default logging providers
+        loggingBuilder.ClearProviders();
         loggingBuilder.AddConsole();
     });
 }

@@ -5,7 +5,8 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
 {
     public class RegisterUserCommand : IRequest<RegisterResponse>
     {
-        public UserRegistrationDto User { get; set; }
+        // made the dto immutable by ommiting the set
+        public UserRegistrationDto User { get; }
 
         public RegisterUserCommand(UserRegistrationDto user)
         {
