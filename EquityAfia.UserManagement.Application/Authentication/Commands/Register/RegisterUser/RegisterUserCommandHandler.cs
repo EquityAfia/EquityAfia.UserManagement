@@ -1,13 +1,11 @@
 ﻿using MediatR;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Application.Interfaces;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using EquityAfia.UserManagement.Application.Authentication.Common;
-using BCrypt.Net;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
+using MassTransit;
+using EquityAfia.UserManagement.Contracts.Events;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser
 {
@@ -16,19 +14,25 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        //private readonly IPublishEndpoint _publishEndpoint;
 
-        public RegisterUserCommandHandler(IUserRepository userRepository, IRoleRepository roleRepository, IJwtTokenGenerator jwtTokenGenerator)
+        public RegisterUserCommandHandler(
+            IUserRepository userRepository,
+            IRoleRepository roleRepository,
+            IJwtTokenGenerator jwtTokenGenerator
+          //  IPublishEndpoint publishEndpoint
+          )
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
+           // _publishEndpoint = publishEndpoint;
         }
 
         public async Task<RegisterResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-
                 var userDto = request.User;
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
@@ -50,10 +54,10 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     UpdatedDate = DateTime.UtcNow
                 };
 
-                // var token = _jwtTokenGenerator.GenerateToken(user);
-
+                // Assign roles to the user
                 await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
 
+                // Create the response
                 var response = new RegisterResponse
                 {
                     FirstName = user.FirstName,
@@ -65,13 +69,23 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     UserRoles = userDto.UserRoles,
                 };
 
+                // Publish UserRegistered event
+                var userRegisteredEvent = new UserRegistered
+                {
+                    UserId = user.Id,
+                    Email = user.Email,
+                    RegisteredAt = DateTime.UtcNow
+                };
+
+               // await _publishEndpoint.Publish(userRegisteredEvent);
+
                 return response;
 
-            }catch(Exception ex)
-            {
-                throw new ApplicationException(ex.ToString());
             }
-            
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while registering the user.", ex);
+            }
         }
     }
 }
