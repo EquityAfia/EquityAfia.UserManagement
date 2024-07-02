@@ -3,9 +3,10 @@ using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Application.Authentication.Common;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
-using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using MassTransit;
-using EquityAfia.UserManagement.Contracts.Events;
+using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
+using EquityAfia.SharedContracts;
+
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser
 {
@@ -14,19 +15,18 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        //private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IPublishEndpoint _publishEndpoint;
 
         public RegisterUserCommandHandler(
             IUserRepository userRepository,
             IRoleRepository roleRepository,
-            IJwtTokenGenerator jwtTokenGenerator
-          //  IPublishEndpoint publishEndpoint
-          )
+            IJwtTokenGenerator jwtTokenGenerator,
+            IPublishEndpoint publishEndpoint)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
-           // _publishEndpoint = publishEndpoint;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<RegisterResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -54,6 +54,9 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     UpdatedDate = DateTime.UtcNow
                 };
 
+                // Save user to repository
+                await _userRepository.AddUserAsync(user);
+
                 // Assign roles to the user
                 await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
 
@@ -73,14 +76,15 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 var userRegisteredEvent = new UserRegistered
                 {
                     UserId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
                     Email = user.Email,
-                    RegisteredAt = DateTime.UtcNow
+                    CreatedDate = user.CreatedDate 
                 };
 
-               // await _publishEndpoint.Publish(userRegisteredEvent);
+                await _publishEndpoint.Publish(userRegisteredEvent);
 
                 return response;
-
             }
             catch (Exception ex)
             {
