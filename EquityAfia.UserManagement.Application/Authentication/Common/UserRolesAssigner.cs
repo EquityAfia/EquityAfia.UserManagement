@@ -31,8 +31,6 @@ namespace EquityAfia.UserManagement.Application.Authentication.Common
                         });
                     }
                 }
-
-                await userRepository.AddUserAsync(user);
             }
             catch (Exception ex)
             {
