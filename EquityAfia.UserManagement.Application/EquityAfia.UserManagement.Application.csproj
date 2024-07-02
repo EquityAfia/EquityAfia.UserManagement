@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EquityAfia.UserManagement.Contracts\EquityAfia.UserManagement.Contracts.csproj" />
     <ProjectReference Include="..\EquityAfia.UserManagement.Domain\EquityAfia.UserManagement.Domain.csproj" />
+	<ProjectReference Include="..\EquityAfia.SharedContracts\EquityAfia.SharedContracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,6 @@ using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
 using EquityAfia.UserManagement.Contracts.Authentication.Login;
 using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
-using EquityAfia.UserManagement.Contracts.Events;
 using EquityAfia.UserManagement.Contracts.UserCRUD.DeleteUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
 using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
@@ -36,10 +35,7 @@ using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
@@ -117,27 +113,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero // Adjust if necessary
         };
     });
-/*
-// MassTransit Kafka configuration
+
+// MassTransit RabbitMQ configuration
 builder.Services.AddMassTransit(x =>
 {
-    x.UsingKafka((context, k) =>
+    x.UsingRabbitMq((context, cfg) =>
     {
-        k.Host("localhost:9092"); // Replace with your Kafka broker address
-
-        k.TopicEndpoint<UserRegistered>("topic-name", e =>
+        cfg.Host("localhost", "/", h =>
         {
-            e.Consumer<UserRegisteredConsumer>();
+            h.Username("guest");
+            h.Password("guest");
         });
+
+        cfg.ConfigureEndpoints(context);
     });
 
-    x.AddConsumer<UserRegisteredConsumer>();
 });
 
-
-// Adding MassTransit consumers if any
 builder.Services.AddMassTransitHostedService();
-*/
+
 
 var app = builder.Build();
 

@@ -13,7 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EquityAfia.UserManagement.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EquityAfia.UserManagement.Contracts", "EquityAfia.UserManagement.Contracts\EquityAfia.UserManagement.Contracts.csproj", "{1773D5D8-93FA-484C-BD54-97E6F7755383}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquityAfia.SharedContracts", "EquityAfia.SharedContracts\EquityAfia.SharedContracts.csproj", "{F99B6881-A22F-4066-919E-662DAADDD9AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EquityAfia.SharedContracts", "EquityAfia.SharedContracts\EquityAfia.SharedContracts.csproj", "{F99B6881-A22F-4066-919E-662DAADDD9AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{78CC2DAE-11E4-4410-A4CD-DC24C37A2E4E} = {78CC2DAE-11E4-4410-A4CD-DC24C37A2E4E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
