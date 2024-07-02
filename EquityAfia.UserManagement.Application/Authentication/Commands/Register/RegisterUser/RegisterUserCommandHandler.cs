@@ -54,11 +54,11 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                     UpdatedDate = DateTime.UtcNow
                 };
 
-                // Save user to repository
-                await _userRepository.AddUserAsync(user);
-
                 // Assign roles to the user
                 await UserRolesAssigner.AssignRolesToUserAsync(_userRepository, _roleRepository, user, userDto.UserRoles);
+
+                // Save user to repository
+                await _userRepository.AddUserAsync(user);
 
                 // Create the response
                 var response = new RegisterResponse
@@ -88,7 +88,7 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An error occurred while registering the user.", ex);
+                throw new Exception(ex.ToString());
             }
         }
     }
