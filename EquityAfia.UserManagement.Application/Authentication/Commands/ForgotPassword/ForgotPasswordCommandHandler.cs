@@ -1,5 +1,7 @@
-﻿using EquityAfia.UserManagement.Application.Interfaces;
+﻿using EquityAfia.SharedContracts;
+using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
+using MassTransit;
 using MediatR;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPassword
@@ -8,10 +10,12 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPa
     {
         private readonly IUserRepository _repository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        public ForgotPasswordCommandHandler(IUserRepository repository, IJwtTokenGenerator jwtTokenGenerator)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public ForgotPasswordCommandHandler(IUserRepository repository, IJwtTokenGenerator jwtTokenGenerator, IPublishEndpoint publishEndpoint)
         {
             _repository = repository;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<ForgotPasswordResponse> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -41,6 +45,16 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPa
                     Email = user.Email,
                     ResetCode = resetToken
                 };
+
+                var forgotPasswordEvent = new UserForgotPassword
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Token = user.ResetToken
+                };
+
+                await _publishEndpoint.Publish(forgotPasswordEvent);
 
                 return response;
             } catch (Exception ex)
