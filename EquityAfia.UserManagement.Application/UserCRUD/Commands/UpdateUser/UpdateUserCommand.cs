@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
+﻿using EquityAfia.UserManagement.Contracts.UserCrudDTOs.UpdateUserDTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;

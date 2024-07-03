@@ -1,6 +1,6 @@
 ﻿
 using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.ResetPasswordDTOs;
 using MediatR;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.ResetPassword

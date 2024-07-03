@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
+﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserTypeDTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;

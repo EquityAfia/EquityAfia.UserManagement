@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EquityAfia.UserManagement.Application.Authentication.Queries.LogIn;
-using EquityAfia.UserManagement.Contracts.Authentication.Login;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.LoginDTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

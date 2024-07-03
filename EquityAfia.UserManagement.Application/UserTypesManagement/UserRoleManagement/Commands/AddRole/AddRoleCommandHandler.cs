@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserRoleDTOs;
 
 namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
 

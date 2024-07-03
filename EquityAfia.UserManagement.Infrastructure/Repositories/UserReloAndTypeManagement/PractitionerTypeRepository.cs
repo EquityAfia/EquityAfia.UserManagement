@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.PractitionerType;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.PractitionerTypeDTOs;
 using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.UserCRUD.DeleteUser;
+﻿using EquityAfia.UserManagement.Contracts.UserCrudDTOs.DeleteUserDTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;

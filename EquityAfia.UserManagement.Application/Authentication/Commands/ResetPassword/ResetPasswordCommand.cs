@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
+﻿using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.ResetPasswordDTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;

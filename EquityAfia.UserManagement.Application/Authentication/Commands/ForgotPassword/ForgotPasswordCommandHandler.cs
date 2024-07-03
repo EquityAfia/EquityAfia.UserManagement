@@ -1,6 +1,6 @@
 ﻿using EquityAfia.SharedContracts;
 using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.ForgotPasswordDTOs;
 using MassTransit;
 using MediatR;
 

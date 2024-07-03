@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using EquityAfia.UserManagement.Application.Authentication.Commands.ForgotPassword;
 using EquityAfia.UserManagement.Application.Authentication.Commands.ResetPassword;
-using EquityAfia.UserManagement.Contracts.Authentication.Forgotpassword;
-using EquityAfia.UserManagement.Contracts.Authentication.ResetPassword;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.ForgotPasswordDTOs;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.ResetPasswordDTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

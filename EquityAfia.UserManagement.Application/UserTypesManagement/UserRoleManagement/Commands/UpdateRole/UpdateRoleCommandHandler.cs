@@ -1,6 +1,6 @@
 ﻿
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserRoleDTOs;
 using MediatR;
 
 namespace EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
