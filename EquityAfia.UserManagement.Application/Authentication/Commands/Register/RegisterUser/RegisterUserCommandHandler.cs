@@ -36,9 +36,9 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
                 var userDto = request.User;
 
                 // Check if user exists in the database
-                var existingUser = await _userRepository.GetUserByEmailAsync(userDto.Email);
+                var existingUser = await _userRepository.UserExists(userDto.Email);
 
-                if(existingUser is not null)
+                if(existingUser)
                 {
                     throw new ApplicationException($"User with email: '{userDto.Email}' already exists");
                 }

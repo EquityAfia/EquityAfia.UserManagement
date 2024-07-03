@@ -120,5 +120,17 @@ namespace EquityAfia.UserManagement.Infrastructure.Repositories
                 throw new ApplicationException(ex.ToString());
             }
         }
+
+        public async Task<bool> UserExists(string email)
+        {
+            var user = await _context.Users
+                     .FirstOrDefaultAsync(u => u.Email == email);
+            if(user is not null)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
