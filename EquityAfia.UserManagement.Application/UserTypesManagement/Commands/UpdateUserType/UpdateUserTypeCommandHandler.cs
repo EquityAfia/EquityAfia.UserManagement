@@ -1,5 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserTypeDTOs;
 using MediatR;
 
 namespace EquityAfia.UserManagement.Application.UserTypesManagement.Commands.UpdateUserType

@@ -1,5 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
+using EquityAfia.UserManagement.Contracts.UserCrudDTOs.UpdateUserDTOs;
 using MediatR;
 
 namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.UpdateUser

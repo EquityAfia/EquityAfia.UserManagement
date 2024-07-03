@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.PractitionerType;
+﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.PractitionerTypeDTOs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

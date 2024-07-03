@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.RegisterUserDTOs;
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser
 {

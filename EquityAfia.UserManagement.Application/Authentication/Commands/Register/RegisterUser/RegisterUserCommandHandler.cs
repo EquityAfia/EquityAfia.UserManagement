@@ -2,10 +2,10 @@
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Application.Interfaces;
 using EquityAfia.UserManagement.Application.Authentication.Common;
-using EquityAfia.UserManagement.Contracts.Authentication.RegisterUser;
 using MassTransit;
 using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
 using EquityAfia.SharedContracts;
+using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.RegisterUserDTOs;
 
 
 namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register.RegisterUser
@@ -34,6 +34,14 @@ namespace EquityAfia.UserManagement.Application.Authentication.Commands.Register
             try
             {
                 var userDto = request.User;
+
+                // Check if user exists in the database
+                var existingUser = await _userRepository.GetUserByEmailAsync(userDto.Email);
+
+                if(existingUser is not null)
+                {
+                    throw new ApplicationException($"User with email: '{userDto.Email}' already exists");
+                }
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 

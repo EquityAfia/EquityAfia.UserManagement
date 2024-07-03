@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
+using EquityAfia.UserManagement.Contracts.UserCrudDTOs.GetUserDTOs;
 
 namespace EquityAfia.UserManagement.Application.UserCRUD.Queries.GetUser
 {

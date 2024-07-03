@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
+﻿using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserTypeDTOs;
 using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using System.Collections.Generic;
 using System.Threading.Tasks;

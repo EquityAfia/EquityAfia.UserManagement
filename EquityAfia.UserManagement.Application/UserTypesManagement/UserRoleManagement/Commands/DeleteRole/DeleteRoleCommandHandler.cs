@@ -1,5 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces.UserRoleAndTypeRepositories;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserRoleDTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;

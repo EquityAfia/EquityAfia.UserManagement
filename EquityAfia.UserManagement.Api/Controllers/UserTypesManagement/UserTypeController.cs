@@ -3,8 +3,7 @@ using EquityAfia.UserManagement.Application.UserTypesManagement.Commands.AddUser
 using EquityAfia.UserManagement.Application.UserTypesManagement.Commands.DeleteUserType;
 using EquityAfia.UserManagement.Application.UserTypesManagement.Commands.UpdateUserType;
 using EquityAfia.UserManagement.Application.UserTypesManagement.Queries.GetUserTypes;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserType;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserTypeDTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

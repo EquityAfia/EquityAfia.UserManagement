@@ -4,7 +4,7 @@ using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.AddRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.DeleteRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Commands.UpdateRole;
 using EquityAfia.UserManagement.Application.UserRoleManagement.Queries.GetRoles;
-using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagement.UserRole;
+using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserRoleDTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

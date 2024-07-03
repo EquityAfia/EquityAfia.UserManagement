@@ -1,5 +1,5 @@
 ﻿using EquityAfia.UserManagement.Application.Interfaces;
-using EquityAfia.UserManagement.Contracts.UserCRUD.GetUser;
+using EquityAfia.UserManagement.Contracts.UserCrudDTOs.GetUserDTOs;
 using MediatR;
 using System;
 using System.Threading;

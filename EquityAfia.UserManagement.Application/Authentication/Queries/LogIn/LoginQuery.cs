@@ -1,4 +1,4 @@
-﻿using EquityAfia.UserManagement.Contracts.Authentication.Login;
+﻿using EquityAfia.UserManagement.Contracts.AuthenticationDTOs.LoginDTOs;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using MediatR;
 using System;

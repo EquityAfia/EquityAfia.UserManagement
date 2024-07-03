@@ -1,7 +1,4 @@
-﻿
-
-using EquityAfia.UserManagement.Contracts.UserCRUD.UpdateUser;
-using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
+﻿using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 
 namespace EquityAfia.UserManagement.Application.Interfaces
 {
