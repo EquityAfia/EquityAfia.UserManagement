@@ -28,6 +28,7 @@ using EquityAfia.UserManagement.Contracts.UserRoleAndTypeManagementDTOs.UserType
 using EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity;
 using EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities;
 using EquityAfia.UserManagement.Infrastructure.Authentication;
+using EquityAfia.UserManagement.Infrastructure.Consumers;
 using EquityAfia.UserManagement.Infrastructure.Data;
 using EquityAfia.UserManagement.Infrastructure.Repositories;
 using EquityAfia.UserManagement.Infrastructure.Repositories.UserReloAndTypeManagement;
@@ -126,7 +127,16 @@ builder.Services.AddMassTransit(x =>
         });
 
         cfg.ConfigureEndpoints(context);
+
+        //Message to be displayed as queue name
+        cfg.ReceiveEndpoint("user-exists-queue", e =>
+        {
+            e.ConfigureConsumer<UserExistsConsumer>(context);
+        });
     });
+
+    x.AddConsumer<UserExistsConsumer>();
+
 
 });
 
