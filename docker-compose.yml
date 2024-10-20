@@ -1,0 +1,50 @@
+
+version: '3.8'
+
+services:
+  webapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: equityafia-usermanagement-dotnet-app:latest
+    ports:
+      - "5269:5269"
+      - "7106:7106"
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=EquityUserManagement;User Id=sa;Password=EquityAfiaUserManagement.2024!;TrustServerCertificate=True;
+      - RABBITMQ_URL=rabbitmq://rabbitmq:5672/
+    networks:
+      - equityafia-usermanagement-dotnet-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=EquityAfiaUserManagement.2024!
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - equityafia-usermanagement-dotnet-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # RabbitMQ default port
+      - "15672:15672" # RabbitMQ management UI
+    networks:
+      - equityafia-usermanagement-dotnet-network
+
+volumes:
+  sqlserver-data:
+
+networks:
+  equityafia-usermanagement-dotnet-network:
+    driver: bridge

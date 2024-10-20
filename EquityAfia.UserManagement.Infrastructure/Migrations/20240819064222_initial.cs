@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EquityAfia.UserManagement.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Vsn1 : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,9 +45,9 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

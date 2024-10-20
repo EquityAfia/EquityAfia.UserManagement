@@ -1,10 +1,6 @@
-﻿using EquityAfia.UserManagement.Contracts.UserCrudDTOs.DeleteUserDTOs;
+﻿
+using EquityAfia.UserManagement.Contracts.UserCrudDTOs.DeleteUserDTOs;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EquityAfia.UserManagement.Application.UserCRUD.Commands.DeleteUser
 {
