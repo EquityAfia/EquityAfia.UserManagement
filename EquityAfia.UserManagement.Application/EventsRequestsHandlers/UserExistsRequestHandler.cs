@@ -31,7 +31,7 @@ namespace EquityAfia.UserManagement.Application.EventsRequestsHandlers
                 IdNumber = user.IdNumber,
             };
 
-            //return response;
+            return;
         }
     }
 }

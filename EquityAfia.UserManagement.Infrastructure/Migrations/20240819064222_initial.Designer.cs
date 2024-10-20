@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquityAfia.UserManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618105038_Vsn 1")]
-    partial class Vsn1
+    [Migration("20240819064222_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,9 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LicenseNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -172,20 +175,37 @@ namespace EquityAfia.UserManagement.Infrastructure.Migrations
 
                     b.ToTable("Users");
 
-                    b.HasDiscriminator<string>("UserType").HasValue("User");
+                    b.HasDiscriminator<string>("UserType").HasValue("USER");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.CHP", b =>
+                {
+                    b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
+
+                    b.HasDiscriminator().HasValue("CHP");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Editor", b =>
+                {
+                    b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
+
+                    b.HasDiscriminator().HasValue("Editor");
+                });
+
+            modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Patient", b =>
+                {
+                    b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
+
+                    b.HasDiscriminator().HasValue("PATIENT");
                 });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.Practitioner", b =>
                 {
                     b.HasBaseType("EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities.User");
 
-                    b.Property<string>("LicenseNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Practitioner");
+                    b.HasDiscriminator().HasValue("PRACTITIONER");
                 });
 
             modelBuilder.Entity("EquityAfia.UserManagement.Domain.RolesAndTypesAggregate.RolesAndTypesEntity.PractitionerType", b =>
