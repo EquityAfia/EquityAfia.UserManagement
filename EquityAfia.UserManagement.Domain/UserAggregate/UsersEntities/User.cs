@@ -52,6 +52,7 @@ namespace EquityAfia.UserManagement.Domain.UserAggregate.UsersEntities
         {
             ResetToken = BCrypt.Net.BCrypt.HashPassword(token);
             UpdatedDate = DateTime.UtcNow;
+
         }
 
         public void ClearResetToken(User user)
